@@ -1,0 +1,8 @@
+#extentions
+*.class
+*.sr
+*.jar
+
+#directory
+bin/
+.vscode/
