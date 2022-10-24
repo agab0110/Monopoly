@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player implements Serializable {
     private String name;
-    private boolean prison;    
+    private boolean prison = false;    
     private int money;
     private List<Contract> contracts;
 

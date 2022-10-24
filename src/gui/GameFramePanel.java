@@ -5,8 +5,6 @@ import java.util.Random;
 
 import java.io.IOException;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -42,7 +40,6 @@ public class GameFramePanel extends JPanel{
     
     public GameFramePanel(Menager menager) { 
         this.setLayout(null);
-        this.setBackground(Color.BLACK);
         this.players = menager.getPlayers();
         this.contracts = menager.getContracts();
         this.menager = menager;
@@ -59,12 +56,13 @@ public class GameFramePanel extends JPanel{
 
         showButtons();
 
+        panel.setSize(720, 720);
         panel.setLayout(null);
-        panel.setBackground(Color.BLACK);
-        
+                
         this.add(panel);
         panel.setVisible(true);
 
+        throwDice();
         update();
     }
 
@@ -92,7 +90,79 @@ public class GameFramePanel extends JPanel{
         panel.add(turnOverButton);
 
         addAction(players.get(i));
-        throwDice();
+
+        
+    }
+
+    private void showPrisonMenu() {
+        panel.removeAll();
+
+        exitPrisonButton = new JButton("Esci di prigione gratutitamente");
+        payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
+        turnOverButton = new JButton("Termina turno");
+        
+        exitPrisonButton.setBounds(540, 390, 200, 30);
+        payExitPrisonButton.setBounds(540, 430, 200, 30);
+        turnOverButton.setBounds(540, 470, 200, 30);
+
+        panel.add(exitPrisonButton);
+        panel.add(payExitPrisonButton);
+        panel.add(turnOverButton);
+
+        addPrisonAction(players.get(i));
+    }
+
+    private void showButtons() {
+        if(players.get(i).getStatus() == false) {
+            showMenu();
+        } else {
+            showPrisonMenu();
+        }
+    }
+
+    private void buyContract(Player player){
+        BuyContractFrame buyContractFrame = new BuyContractFrame(player, menager);
+        buyContractFrame.setVisible(true);   
+    }
+
+    private void update() {
+        Thread thread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {}
+                
+                textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
+                textArea.setText(setContracts());
+            }
+        });
+        thread.start();
+    }
+
+    private String setContracts() {
+        String contractName = "";
+
+        contracts = players.get(i).getContract();
+
+        for (Contract contract : contracts) {
+            contractName += contract.getName() + "\n";
+        }
+        return contractName;
+    }
+
+    private void payRent(Player player) {
+        PayRentFrame payRentFrame = new PayRentFrame(player, menager);
+        payRentFrame.setVisible(true);
+    }
+
+    private void throwDice(){
+        Random random = new Random();
+        JOptionPane.showMessageDialog(
+        null,
+        random.nextInt(2,12),
+        "Dadi",
+        JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     private void addAction(Player player) {
@@ -122,7 +192,11 @@ public class GameFramePanel extends JPanel{
                 try {
                     player.subMoney(tax);
                 } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(null, "Errore: " + e1.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                    "Errore: " + e1.getMessage(), 
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         );
@@ -159,73 +233,36 @@ public class GameFramePanel extends JPanel{
 
                 panel.removeAll();
                 showButtons();
+                throwDice();
             }
         );
     }
 
-    private void buyContract(Player player){
-        BuyContractFrame buyContractFrame = new BuyContractFrame(player, menager);
-        buyContractFrame.setVisible(true);   
-    }
+    private void addPrisonAction(Player player) {
+        exitPrisonButton.addActionListener(
+            e -> {
+                player.setStatus(false);
+                panel.removeAll();
+                showButtons();
+            }
+        );
 
-    private void update() {
-        Thread thread = new Thread(() -> {
-            while (true) {
+        payExitPrisonButton.addActionListener(
+            e -> {
                 try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {}
-
-                textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
-                textArea.setText(setContracts());
+                    player.subMoney(50);
+                } catch (MoneyExeption e1) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Errore: " + e1.getMessage(),
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
+                player.setStatus(false);
+                panel.removeAll();
+                showButtons();               
             }
-        });
-        thread.start();
-    }
-
-    private String setContracts() {
-        String contractName = "";
-
-        contracts = players.get(i).getContract();
-
-        for (Contract contract : contracts) {
-            contractName += contract.getName() + "\n";
-        }
-        return contractName;
-    }
-
-    private void payRent(Player player) {
-        PayRentFrame payRentFrame = new PayRentFrame(player, menager);
-        payRentFrame.setVisible(true);
-    }
-
-    private void throwDice(){
-        Random random = new Random();
-        JOptionPane.showMessageDialog(null,
-        random.nextInt(2,12),
-        "Dadi",
-        JOptionPane.INFORMATION_MESSAGE
         );
-    }
-
-    private void showPrisonMenu() {
-        exitPrisonButton = new JButton("Esci di prigione gratutitamente");
-        payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
-        turnOverButton = new JButton("Termina turno");
-        
-        exitPrisonButton.setBounds(540, 390, 200, 30);
-        payExitPrisonButton.setBounds(540, 430, 200, 30);
-        turnOverButton.setBounds(540, 470, 200, 30);
-
-        panel.add(exitPrisonButton);
-        panel.add(payExitPrisonButton);
-        panel.add(turnOverButton);
-    }
-
-    private void showButtons() {
-        if(players.get(i).getStatus() == false) {
-            showMenu();
-        } else {
-            showPrisonMenu();
-        }
     }
 }
