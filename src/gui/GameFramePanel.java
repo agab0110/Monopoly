@@ -5,8 +5,6 @@ import java.util.Random;
 
 import java.io.IOException;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -42,7 +40,6 @@ public class GameFramePanel extends JPanel{
     
     public GameFramePanel(Menager menager) { 
         this.setLayout(null);
-        this.setBackground(Color.BLACK);
         this.players = menager.getPlayers();
         this.contracts = menager.getContracts();
         this.menager = menager;
@@ -61,11 +58,11 @@ public class GameFramePanel extends JPanel{
 
         panel.setSize(720, 720);
         panel.setLayout(null);
-        panel.setBackground(Color.BLACK);
-        
+                
         this.add(panel);
         panel.setVisible(true);
 
+        throwDice();
         update();
     }
 
@@ -92,12 +89,14 @@ public class GameFramePanel extends JPanel{
         panel.add(goToPrisonButton);
         panel.add(turnOverButton);
 
-        throwDice();
-
         addAction(players.get(i));
+
+        
     }
 
     private void showPrisonMenu() {
+        panel.removeAll();
+
         exitPrisonButton = new JButton("Esci di prigione gratutitamente");
         payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
         turnOverButton = new JButton("Termina turno");
@@ -132,7 +131,7 @@ public class GameFramePanel extends JPanel{
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {}
-
+                
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
             }
@@ -158,7 +157,8 @@ public class GameFramePanel extends JPanel{
 
     private void throwDice(){
         Random random = new Random();
-        JOptionPane.showMessageDialog(null,
+        JOptionPane.showMessageDialog(
+        null,
         random.nextInt(2,12),
         "Dadi",
         JOptionPane.INFORMATION_MESSAGE
@@ -233,6 +233,7 @@ public class GameFramePanel extends JPanel{
 
                 panel.removeAll();
                 showButtons();
+                throwDice();
             }
         );
     }
