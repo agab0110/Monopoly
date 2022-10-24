@@ -76,11 +76,12 @@ public class GameFramePanel extends JPanel{
     private void showPanel() {
         if(players.get(i).getStatus() == false) {
             panel = new NormalGamePanel(players, menager);
-            this.add(panel);
         } else {
             panel = new PrisonPanel(players, menager);
-            this.add(panel);
         }
+
+        this.add(panel);
+        panel.setVisible(true);
     }
 
 
