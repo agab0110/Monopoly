@@ -34,7 +34,6 @@ public class GameFramePanel extends JPanel{
         this.players = menager.getPlayers();
         this.contracts = menager.getContracts();
         this.menager = menager;
-        this.removeAll();
 
         turnOverButton = new JButton("Termina turno");
         turnOverButton.setBounds(540, 590, 150, 30);
@@ -65,15 +64,12 @@ public class GameFramePanel extends JPanel{
                         "Errore",
                         JOptionPane.ERROR_MESSAGE);
                 }
-
-                this.removeAll();
-
-                throwDice();
+                this.remove(panel);
             }
         );
 
         showPanel();
-
+        throwDice();
         update();
     }
 
