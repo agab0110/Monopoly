@@ -1,7 +1,11 @@
 package gui;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -16,9 +20,13 @@ public class GameFramePanel extends JPanel{
     private JTextField textField;
     private JTextArea textArea;
 
+    private JButton turnOverButton;
+
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
+
+    private JPanel panel;
     
     public GameFramePanel(Menager menager) { 
         this.setLayout(null);
@@ -28,6 +36,9 @@ public class GameFramePanel extends JPanel{
         this.menager = menager;
         this.removeAll();
 
+        turnOverButton = new JButton("Termina turno");
+        turnOverButton.setBounds(540, 590, 150, 30);
+
         textField = new JTextField();
         textArea = new JTextArea();
 
@@ -36,6 +47,30 @@ public class GameFramePanel extends JPanel{
 
         this.add(textField);
         this.add(textArea);
+        this.add(turnOverButton);
+
+        turnOverButton.addActionListener(
+            e -> {
+                i++;
+
+                if (i == players.size()) {
+                    i = 0;
+                }
+                try {
+                    menager.saveMenager();
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Errore salvataggio",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+
+                this.removeAll();
+
+                throwDice();
+            }
+        );
 
         showPanel();
 
@@ -44,11 +79,11 @@ public class GameFramePanel extends JPanel{
 
     private void showPanel() {
         if(players.get(i).getStatus() == false) {
-            NormalGamePanel normalGamePanel = new NormalGamePanel(players, menager);
-            this.add(normalGamePanel);
+            panel = new NormalGamePanel(players, menager);
+            this.add(panel);
         } else {
-            PrisonPanel prisonPanel = new PrisonPanel(players, menager);
-            this.add(prisonPanel);
+            panel = new PrisonPanel(players, menager);
+            this.add(panel);
         }
     }
 
@@ -76,6 +111,16 @@ public class GameFramePanel extends JPanel{
             contractName += contract.getName() + "\n";
         }
         return contractName;
+    }
+
+    private void throwDice(){
+        Random random = new Random();
+        JOptionPane.showMessageDialog(
+        null,
+        random.nextInt(2,12),
+        "Dadi",
+        JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
 }
