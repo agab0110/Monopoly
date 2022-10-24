@@ -65,6 +65,8 @@ public class GameFramePanel extends JPanel{
         this.add(panel);
         panel.setVisible(true);
 
+        addAction(players.get(i));
+
         update();
     }
 
@@ -91,7 +93,6 @@ public class GameFramePanel extends JPanel{
         panel.add(goToPrisonButton);
         panel.add(turnOverButton);
 
-        addAction(players.get(i));
         throwDice();
     }
 
@@ -122,7 +123,11 @@ public class GameFramePanel extends JPanel{
                 try {
                     player.subMoney(tax);
                 } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(null, "Errore: " + e1.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                    "Errore: " + e1.getMessage(), 
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         );
@@ -159,6 +164,32 @@ public class GameFramePanel extends JPanel{
 
                 panel.removeAll();
                 showButtons();
+            }
+        );
+
+        exitPrisonButton.addActionListener(
+            e -> {
+                player.setStatus(false);
+                panel.removeAll();
+                showButtons();
+            }
+        );
+
+        payExitPrisonButton.addActionListener(
+            e -> {
+                try {
+                    player.subMoney(50);
+                } catch (MoneyExeption e1) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Errore: " + e1.getMessage(),
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
+                player.setStatus(false);
+                panel.removeAll();
+                showButtons();               
             }
         );
     }
