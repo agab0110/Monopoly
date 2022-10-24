@@ -1,35 +1,20 @@
 package gui;
 
 import java.util.List;
-import java.util.Random;
-
-import java.io.IOException;
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import app.Contract;
 import app.Menager;
-import app.MoneyExeption;
 import app.Player;
 
 public class GameFramePanel extends JPanel{
     public static int i = 0;
 
-    private JPanel panel;
-
     private JTextField textField;
     private JTextArea textArea;
-
-    private JButton buyContractsButton;
-    private JButton payRentButton;
-    private JButton payTaxButton;
-    private JButton passStartButton;
-    private JButton goToPrisonButton;
-    private JButton turnOverButton;
 
     private List<Player> players;
     private List<Contract> contracts;
@@ -41,8 +26,8 @@ public class GameFramePanel extends JPanel{
         this.players = menager.getPlayers();
         this.contracts = menager.getContracts();
         this.menager = menager;
+        this.removeAll();
 
-        panel = new JPanel();
         textField = new JTextField();
         textArea = new JTextArea();
 
@@ -52,59 +37,21 @@ public class GameFramePanel extends JPanel{
         this.add(textField);
         this.add(textArea);
 
-        showButtons();
+        showPanel();
 
-        panel.setSize(720, 720);
-        panel.setLayout(null);
-                
-        this.add(panel);
-        panel.setVisible(true);
-
-        throwDice();
         update();
     }
 
-    private void showMenu() {
-        
-        buyContractsButton = new JButton("Acquista contratto");
-        payRentButton = new JButton("Paga affitto");
-        payTaxButton = new JButton("Paga tassa");
-        passStartButton = new JButton("Passa dal via");
-        goToPrisonButton = new JButton("Vai in prigione");
-        turnOverButton = new JButton("Termina turno");
-        
-        buyContractsButton.setBounds(540, 390, 150, 30);
-        payRentButton.setBounds(540, 430, 150, 30);
-        payTaxButton.setBounds(540, 470, 150, 30);
-        passStartButton.setBounds(540, 510, 150, 30);
-        goToPrisonButton.setBounds(540, 550, 150, 30);
-        turnOverButton.setBounds(540, 590, 150, 30);
-
-        panel.add(buyContractsButton);
-        panel.add(payRentButton);
-        panel.add(payTaxButton);
-        panel.add(passStartButton);
-        panel.add(goToPrisonButton);
-        panel.add(turnOverButton);
-
-        addAction(players.get(i));
-
-        
-    }
-
-    private void showButtons() {
+    private void showPanel() {
         if(players.get(i).getStatus() == false) {
-            showMenu();
+            NormalGamePanel normalGamePanel = new NormalGamePanel(players, menager);
+            this.add(normalGamePanel);
         } else {
-            PrisonPanel prisonPanel = new PrisonPanel(players.get(i));
-            prisonPanel.setVisible(true);
+            PrisonPanel prisonPanel = new PrisonPanel(players, menager);
+            this.add(prisonPanel);
         }
     }
 
-    private void buyContract(Player player){
-        BuyContractFrame buyContractFrame = new BuyContractFrame(player, menager);
-        buyContractFrame.setVisible(true);   
-    }
 
     private void update() {
         Thread thread = new Thread(() -> {
@@ -131,92 +78,4 @@ public class GameFramePanel extends JPanel{
         return contractName;
     }
 
-    private void payRent(Player player) {
-        PayRentFrame payRentFrame = new PayRentFrame(player, menager);
-        payRentFrame.setVisible(true);
-    }
-
-    private void throwDice(){
-        Random random = new Random();
-        JOptionPane.showMessageDialog(
-        null,
-        random.nextInt(2,12),
-        "Dadi",
-        JOptionPane.INFORMATION_MESSAGE
-        );
-    }
-
-    private void addAction(Player player) {
-        buyContractsButton.addActionListener(
-            e -> {
-                buyContract(player);
-            }
-        );
-
-        payRentButton.addActionListener(
-            e -> {
-                payRent(player);
-            }
-        );
-
-        payTaxButton.addActionListener(
-            e -> {
-                int tax = 0;
-                String s = JOptionPane.showInputDialog("Inserire l'importo ");
-                try{
-                    tax = Integer.parseInt(s);
-                }
-                catch (NumberFormatException ex){
-                    ex.printStackTrace();
-                }
-                
-                try {
-                    player.subMoney(tax);
-                } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(null,
-                    "Errore: " + e1.getMessage(), 
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        );
-
-        passStartButton.addActionListener(
-            e -> {
-                player.addMoney(200);
-                passStartButton.setVisible(false);
-            }
-        );
-
-        goToPrisonButton.addActionListener(
-            e -> {
-                player.setStatus(true);
-            }
-        );
-
-        turnOverButton.addActionListener(
-            e -> {
-                i++;
-
-                if (i == players.size()) {
-                    i = 0;
-                }
-                try {
-                    menager.saveMenager();
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Errore salvataggio",
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE);
-                }
-
-                panel.removeAll();
-                showButtons();
-                throwDice();
-            }
-        );
-    }
-    
 }

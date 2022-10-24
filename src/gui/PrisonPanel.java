@@ -1,9 +1,14 @@
 package gui;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Random;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import app.Menager;
 import app.MoneyExeption;
 import app.Player;
 
@@ -11,8 +16,13 @@ public class PrisonPanel extends JPanel{
     private JButton turnOverButton;
     private JButton exitPrisonButton;
     private JButton payExitPrisonButton;
-    
-    public PrisonPanel(Player player) {
+    private int index = GameFramePanel.i;
+    private Menager menager;
+    private List<Player> players;
+
+    public PrisonPanel(List<Player> players, Menager menager) {
+        this.menager = menager;
+        this.players = players;
 
         exitPrisonButton = new JButton("Esci di prigione gratutitamente");
         payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
@@ -26,7 +36,7 @@ public class PrisonPanel extends JPanel{
         this.add(payExitPrisonButton);
         this.add(turnOverButton);
 
-        addPrisonAction(player);
+        addPrisonAction(players.get(index));
     }
 
     private void addPrisonAction(Player player) {
@@ -53,5 +63,39 @@ public class PrisonPanel extends JPanel{
                 this.removeAll();           
             }
         );
+
+        turnOverButton.addActionListener(
+            e -> {
+                index++;
+
+                if (index == players.size()) {
+                    index = 0;
+                }
+                try {
+                    menager.saveMenager();
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Errore salvataggio",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+
+                this.removeAll();
+
+                throwDice();
+            }
+        );
     }
+
+    private void throwDice(){
+        Random random = new Random();
+        JOptionPane.showMessageDialog(
+        null,
+        random.nextInt(2,12),
+        "Dadi",
+        JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
 }
