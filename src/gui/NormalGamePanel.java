@@ -76,7 +76,7 @@ public class NormalGamePanel extends JPanel {
 
         goToPrisonButton.addActionListener(
             e -> {
-                prisonAction(player);
+                prisonAction();
             }
         );
     }
@@ -112,8 +112,8 @@ public class NormalGamePanel extends JPanel {
         }
     }
     
-    private void prisonAction(Player player) {
-        player.setStatus(true);
+    private void prisonAction() {
+        players.get(GameFrame.i).setStatus(true);
 
         GameFrame.i++;
 

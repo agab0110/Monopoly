@@ -26,8 +26,8 @@ public class PrisonPanel extends JPanel{
         exitPrisonButton = new JButton("Esci di prigione gratutitamente");
         payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
         
-        exitPrisonButton.setBounds(540, 390, 200, 30);
-        payExitPrisonButton.setBounds(540, 430, 200, 30);
+        exitPrisonButton.setBounds(490, 390, 210, 30);
+        payExitPrisonButton.setBounds(490, 430, 210, 30);
 
         this.add(exitPrisonButton);
         this.add(payExitPrisonButton);
