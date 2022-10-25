@@ -35,7 +35,6 @@ public class PrisonPanel extends JPanel{
         exitPrisonButton.addActionListener(
             e -> {
                 player.setStatus(false);
-                this.removeAll();
             }
         );
 
@@ -51,8 +50,7 @@ public class PrisonPanel extends JPanel{
                         JOptionPane.ERROR_MESSAGE
                     );
                 }
-                player.setStatus(false);
-                this.removeAll();           
+                player.setStatus(false);          
             }
         );
     }
