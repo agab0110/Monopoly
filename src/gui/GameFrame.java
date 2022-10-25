@@ -79,6 +79,7 @@ public class GameFrame extends JFrame{
         
         throwDice();
         showPanel();
+
         update();
     }
 
