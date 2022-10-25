@@ -71,19 +71,20 @@ public class GameFrame extends JFrame{
                         "Errore salvataggio",
                         "Errore",
                         JOptionPane.ERROR_MESSAGE);
+                        this.remove(panel);
                 }
-                this.remove(panel);
             }
         );
-
-        showPanel();
+        
         throwDice();
+        showPanel();
         update();
     }
 
     private void showPanel() {
         if(players.get(i).getStatus() == true) {
             panel = new PrisonPanel(players, menager);
+            
         } else {
             panel = new NormalGamePanel(players, menager);
         }

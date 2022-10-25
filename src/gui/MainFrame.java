@@ -99,10 +99,20 @@ public class MainFrame extends JFrame{
                     try {
                         addNewPlayer();
                     } catch (PlayerException e) {
-                        JOptionPane.showMessageDialog(null, "Errore: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "Errore: " + e.getMessage(),
+                            "Errore",
+                            JOptionPane.ERROR_MESSAGE
+                        );
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Limite giocatori raggiunto", "ERRORE", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Limite giocatori raggiunto",
+                        "ERRORE", 
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         );
@@ -112,7 +122,12 @@ public class MainFrame extends JFrame{
                 if (players.size() >= 2) {
                     startGame();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Non ci sono abbastanza giocatori", "ERRORE", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Non ci sono abbastanza giocatori",
+                        "ERRORE",
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         );
@@ -125,7 +140,9 @@ public class MainFrame extends JFrame{
     }
 
     private void addNewPlayer() throws PlayerException{        
-        String name = JOptionPane.showInputDialog(null, "Inserire un nuovo giocatore");
+        String name = JOptionPane.showInputDialog(
+            null,
+            "Inserire un nuovo giocatore");
         for (Player player : players) {
             if (name.equals(player.getName())) {
                 throw new PlayerException("Nome duplicato");
