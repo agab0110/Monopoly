@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -17,14 +18,14 @@ public class NormalGamePanel extends JPanel {
     private JButton passStartButton;
     private JButton goToPrisonButton;
     
-
+    private List<Player> players;
     private Menager menager;
 
-    //private int index = GameFramePanel.i;
     private int index = GameFrame.i;
 
     public NormalGamePanel(List<Player> players, Menager menager) {
         this.menager = menager;
+        this.players = players;
         this.setLayout(null);
 
         buyContractsButton = new JButton("Acquista contratto");
@@ -63,24 +64,7 @@ public class NormalGamePanel extends JPanel {
 
         payTaxButton.addActionListener(
             e -> {
-                int tax = 0;
-                String s = JOptionPane.showInputDialog("Inserire l'importo ");
-                try{
-                    tax = Integer.parseInt(s);
-                }
-                catch (NumberFormatException ex){
-                    ex.printStackTrace();
-                }
-                
-                try {
-                    player.subMoney(tax);
-                } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(null,
-                    "Errore: " + e1.getMessage(), 
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE
-                    );
-                }
+                taxAction(player);
             }
         );
 
@@ -92,7 +76,7 @@ public class NormalGamePanel extends JPanel {
 
         goToPrisonButton.addActionListener(
             e -> {
-                player.setStatus(true);
+                prisonAction(player);
             }
         );
     }
@@ -107,4 +91,63 @@ public class NormalGamePanel extends JPanel {
         buyContractFrame.setVisible(true);   
     }
 
+    private void taxAction(Player player) {
+        int tax = 0;
+        String s = JOptionPane.showInputDialog("Inserire l'importo ");
+        try{
+            tax = Integer.parseInt(s);
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+                
+        try {
+            player.subMoney(tax);
+        } catch (MoneyExeption e1) {
+            JOptionPane.showMessageDialog(null,
+            "Errore: " + e1.getMessage(), 
+            "Errore",
+            JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    private void prisonAction(Player player) {
+        player.setStatus(true);
+
+        GameFrame.i++;
+
+        if (GameFrame.i == players.size()) {
+            GameFrame.i = 0;
+        }
+
+        try {
+            menager.saveMenager();
+        } catch (IOException e1) {
+            JOptionPane.showMessageDialog(
+            null, 
+            "Errore salvataggio",
+            "Errore",
+            JOptionPane.ERROR_MESSAGE);
+        }
+
+        GameFrame.getInstance().remove(this);
+        GameFrame.throwDice();
+
+        showpanel();
+        GameFrame.getInstance().updateThread();
+    }
+    
+    private void showpanel() {
+        JPanel panel;
+
+        if(players.get(index).getStatus() == true) {
+            panel = new PrisonPanel(players, menager);
+        } else {
+            panel = new NormalGamePanel(players, menager);
+        }
+        
+        GameFrame.getInstance().add(panel);
+        panel.setVisible(true);
+    }
 }
