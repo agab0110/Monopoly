@@ -74,12 +74,12 @@ public class GameFrame extends JFrame{
                         JOptionPane.ERROR_MESSAGE);
                 }
                 this.remove(panel);
+                throwDice();
+                showPanel();
             }
         );
-        
-        throwDice();
         showPanel();
-
+        throwDice();
         update();
     }
 
@@ -104,6 +104,7 @@ public class GameFrame extends JFrame{
                 
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
+                
             }
         });
         thread.start();
