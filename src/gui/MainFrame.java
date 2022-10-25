@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,7 +23,6 @@ public class MainFrame extends JFrame{
     private JButton insertPlayerButton;
     private JButton startGameButton;
     private JButton exitButton;
-    private JComboBox<String> colorBox;
 
     private List<Player> players;
     private Menager menager;
@@ -126,13 +124,7 @@ public class MainFrame extends JFrame{
         );
     }
 
-    private void addNewPlayer() throws PlayerException{
-
-        //String[] colors = {"rosso", "giallo", "verde", "blue", "arancione", "viola"};
-        //colorBox = new JComboBox<>(colors);
-
-        // TODO: inserire colorBox in JOptionPane.showInputDialog
-        
+    private void addNewPlayer() throws PlayerException{        
         String name = JOptionPane.showInputDialog(null, "Inserire un nuovo giocatore");
         for (Player player : players) {
             if (name.equals(player.getName())) {
