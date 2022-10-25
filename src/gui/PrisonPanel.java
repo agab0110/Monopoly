@@ -13,11 +13,15 @@ import app.Player;
 public class PrisonPanel extends JPanel{
     private JButton exitPrisonButton;
     private JButton payExitPrisonButton;
+    private List<Player> players;
+    private Menager menager;
 
     private int index = GameFrame.i;
 
     public PrisonPanel(List<Player> players, Menager menager) {
         this.setLayout(null);
+        this.players = players;
+        this.menager = menager;
 
         exitPrisonButton = new JButton("Esci di prigione gratutitamente");
         payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
@@ -35,6 +39,9 @@ public class PrisonPanel extends JPanel{
         exitPrisonButton.addActionListener(
             e -> {
                 player.setStatus(false);
+
+                GameFrame.getInstance().remove(this);
+                GameFrame.getInstance().add(new NormalGamePanel(players, menager));
             }
         );
 
@@ -50,7 +57,10 @@ public class PrisonPanel extends JPanel{
                         JOptionPane.ERROR_MESSAGE
                     );
                 }
-                player.setStatus(false);          
+                player.setStatus(false);
+                
+                GameFrame.getInstance().remove(this);
+                GameFrame.getInstance().add(new NormalGamePanel(players, menager));
             }
         );
     }

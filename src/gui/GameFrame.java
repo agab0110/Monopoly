@@ -30,8 +30,10 @@ public class GameFrame extends JFrame{
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
+    private static JFrame frame;
 
     public GameFrame(Menager menager) {
+        this.frame = this;
 
         this.setSize(720,720);
         setResizable(false);
@@ -129,5 +131,9 @@ public class GameFrame extends JFrame{
         "Dadi",
         JOptionPane.INFORMATION_MESSAGE
         );
+    }
+
+    public static JFrame getInstance() {
+        return frame;
     }
 }
