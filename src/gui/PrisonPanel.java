@@ -28,10 +28,10 @@ public class PrisonPanel extends JPanel{
         this.add(exitPrisonButton);
         this.add(payExitPrisonButton);
 
-        addPrisonAction(players.get(index));
+        addAction(players.get(index));
     }
 
-    private void addPrisonAction(Player player) {
+    private void addAction(Player player) {
         exitPrisonButton.addActionListener(
             e -> {
                 player.setStatus(false);
