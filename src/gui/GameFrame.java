@@ -63,6 +63,7 @@ public class GameFrame extends JFrame{
                 if (i == players.size()) {
                     i = 0;
                 }
+
                 try {
                     menager.saveMenager();
                 } catch (IOException e1) {
@@ -84,7 +85,6 @@ public class GameFrame extends JFrame{
     private void showPanel() {
         if(players.get(i).getStatus() == true) {
             panel = new PrisonPanel(players, menager);
-            
         } else {
             panel = new NormalGamePanel(players, menager);
         }
