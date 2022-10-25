@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,7 +23,6 @@ public class MainFrame extends JFrame{
     private JButton insertPlayerButton;
     private JButton startGameButton;
     private JButton exitButton;
-    private JComboBox<String> colorBox;
 
     private List<Player> players;
     private Menager menager;
@@ -101,10 +99,20 @@ public class MainFrame extends JFrame{
                     try {
                         addNewPlayer();
                     } catch (PlayerException e) {
-                        JOptionPane.showMessageDialog(null, "Errore: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "Errore: " + e.getMessage(),
+                            "Errore",
+                            JOptionPane.ERROR_MESSAGE
+                        );
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Limite giocatori raggiunto", "ERRORE", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Limite giocatori raggiunto",
+                        "ERRORE", 
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         );
@@ -114,7 +122,12 @@ public class MainFrame extends JFrame{
                 if (players.size() >= 2) {
                     startGame();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Non ci sono abbastanza giocatori", "ERRORE", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Non ci sono abbastanza giocatori",
+                        "ERRORE",
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         );
@@ -126,14 +139,14 @@ public class MainFrame extends JFrame{
         );
     }
 
-    private void addNewPlayer() throws PlayerException{
+    private void addNewPlayer() throws PlayerException{        
+        String name = JOptionPane.showInputDialog(
+            null,
+            "Inserire un nuovo giocatore",
+            "Nuovo giocatore",
+            JOptionPane.OK_CANCEL_OPTION
+            );
 
-        //String[] colors = {"rosso", "giallo", "verde", "blue", "arancione", "viola"};
-        //colorBox = new JComboBox<>(colors);
-
-        // TODO: inserire colorBox in JOptionPane.showInputDialog
-        
-        String name = JOptionPane.showInputDialog(null, "Inserire un nuovo giocatore");
         for (Player player : players) {
             if (name.equals(player.getName())) {
                 throw new PlayerException("Nome duplicato");

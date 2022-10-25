@@ -1,19 +1,17 @@
-package gui;
+/*package gui;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import java.io.IOException;
-
-import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import app.Contract;
 import app.Menager;
-import app.MoneyExeption;
 import app.Player;
 
 public class GameFramePanel extends JPanel{
@@ -24,27 +22,22 @@ public class GameFramePanel extends JPanel{
     private JTextField textField;
     private JTextArea textArea;
 
-    private JButton buyContractsButton;
-    private JButton payRentButton;
-    private JButton payTaxButton;
-    private JButton passStartButton;
-    private JButton goToPrisonButton;
     private JButton turnOverButton;
-    private JButton exitPrisonButton;
-    private JButton payExitPrisonButton;
 
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
     
-    
     public GameFramePanel(Menager menager) { 
         this.setLayout(null);
+        this.setSize(720, 720);
         this.players = menager.getPlayers();
         this.contracts = menager.getContracts();
         this.menager = menager;
 
-        panel = new JPanel();
+        turnOverButton = new JButton("Termina turno");
+        turnOverButton.setBounds(540, 590, 150, 30);
+
         textField = new JTextField();
         textArea = new JTextArea();
 
@@ -53,77 +46,44 @@ public class GameFramePanel extends JPanel{
 
         this.add(textField);
         this.add(textArea);
+        this.add(turnOverButton);
 
-        showButtons();
+        turnOverButton.addActionListener(
+            e -> {
+                i++;
 
-        panel.setSize(720, 720);
-        panel.setLayout(null);
-                
-        this.add(panel);
-        panel.setVisible(true);
+                if (i == players.size()) {
+                    i = 0;
+                }
+                try {
+                    menager.saveMenager();
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Errore salvataggio",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                this.remove(panel);
+            }
+        );
 
+        showPanel();
         throwDice();
         update();
     }
 
-    private void showMenu() {
-        
-        buyContractsButton = new JButton("Acquista contratto");
-        payRentButton = new JButton("Paga affitto");
-        payTaxButton = new JButton("Paga tassa");
-        passStartButton = new JButton("Passa dal via");
-        goToPrisonButton = new JButton("Vai in prigione");
-        turnOverButton = new JButton("Termina turno");
-        
-        buyContractsButton.setBounds(540, 390, 150, 30);
-        payRentButton.setBounds(540, 430, 150, 30);
-        payTaxButton.setBounds(540, 470, 150, 30);
-        passStartButton.setBounds(540, 510, 150, 30);
-        goToPrisonButton.setBounds(540, 550, 150, 30);
-        turnOverButton.setBounds(540, 590, 150, 30);
-
-        panel.add(buyContractsButton);
-        panel.add(payRentButton);
-        panel.add(payTaxButton);
-        panel.add(passStartButton);
-        panel.add(goToPrisonButton);
-        panel.add(turnOverButton);
-
-        addAction(players.get(i));
-
-        
-    }
-
-    private void showPrisonMenu() {
-        panel.removeAll();
-
-        exitPrisonButton = new JButton("Esci di prigione gratutitamente");
-        payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
-        turnOverButton = new JButton("Termina turno");
-        
-        exitPrisonButton.setBounds(540, 390, 200, 30);
-        payExitPrisonButton.setBounds(540, 430, 200, 30);
-        turnOverButton.setBounds(540, 470, 200, 30);
-
-        panel.add(exitPrisonButton);
-        panel.add(payExitPrisonButton);
-        panel.add(turnOverButton);
-
-        addPrisonAction(players.get(i));
-    }
-
-    private void showButtons() {
+    private void showPanel() {
         if(players.get(i).getStatus() == false) {
-            showMenu();
+            panel = new NormalGamePanel(players, menager);
         } else {
-            showPrisonMenu();
+            panel = new PrisonPanel(players, menager);
         }
+
+        this.add(panel);
+        panel.setVisible(true);
     }
 
-    private void buyContract(Player player){
-        BuyContractFrame buyContractFrame = new BuyContractFrame(player, menager);
-        buyContractFrame.setVisible(true);   
-    }
 
     private void update() {
         Thread thread = new Thread(() -> {
@@ -150,11 +110,6 @@ public class GameFramePanel extends JPanel{
         return contractName;
     }
 
-    private void payRent(Player player) {
-        PayRentFrame payRentFrame = new PayRentFrame(player, menager);
-        payRentFrame.setVisible(true);
-    }
-
     private void throwDice(){
         Random random = new Random();
         JOptionPane.showMessageDialog(
@@ -165,104 +120,4 @@ public class GameFramePanel extends JPanel{
         );
     }
 
-    private void addAction(Player player) {
-        buyContractsButton.addActionListener(
-            e -> {
-                buyContract(player);
-            }
-        );
-
-        payRentButton.addActionListener(
-            e -> {
-                payRent(player);
-            }
-        );
-
-        payTaxButton.addActionListener(
-            e -> {
-                int tax = 0;
-                String s = JOptionPane.showInputDialog("Inserire l'importo ");
-                try{
-                    tax = Integer.parseInt(s);
-                }
-                catch (NumberFormatException ex){
-                    ex.printStackTrace();
-                }
-                
-                try {
-                    player.subMoney(tax);
-                } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(null,
-                    "Errore: " + e1.getMessage(), 
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        );
-
-        passStartButton.addActionListener(
-            e -> {
-                player.addMoney(200);
-                passStartButton.setVisible(false);
-            }
-        );
-
-        goToPrisonButton.addActionListener(
-            e -> {
-                player.setStatus(true);
-            }
-        );
-
-        turnOverButton.addActionListener(
-            e -> {
-                i++;
-
-                if (i == players.size()) {
-                    i = 0;
-                }
-                try {
-                    menager.saveMenager();
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Errore salvataggio",
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE);
-                }
-
-                panel.removeAll();
-                showButtons();
-                throwDice();
-            }
-        );
-    }
-
-    private void addPrisonAction(Player player) {
-        exitPrisonButton.addActionListener(
-            e -> {
-                player.setStatus(false);
-                panel.removeAll();
-                showButtons();
-            }
-        );
-
-        payExitPrisonButton.addActionListener(
-            e -> {
-                try {
-                    player.subMoney(50);
-                } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Errore: " + e1.getMessage(),
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE
-                    );
-                }
-                player.setStatus(false);
-                panel.removeAll();
-                showButtons();               
-            }
-        );
-    }
-}
+}*/
