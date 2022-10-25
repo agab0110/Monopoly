@@ -87,7 +87,6 @@ public class NormalGamePanel extends JPanel {
         passStartButton.addActionListener(
             e -> {
                 player.addMoney(200);
-                passStartButton.setVisible(false);
             }
         );
 

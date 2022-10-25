@@ -18,7 +18,6 @@ import app.Player;
 
 
 public class GameFrame extends JFrame{
-    //private GameFramePanel gameFramePanel;
     public static int i = 0;
 
     private JPanel panel;
@@ -83,10 +82,10 @@ public class GameFrame extends JFrame{
     }
 
     private void showPanel() {
-        if(players.get(i).getStatus() == false) {
-            panel = new NormalGamePanel(players, menager);
-        } else {
+        if(players.get(i).getStatus() == true) {
             panel = new PrisonPanel(players, menager);
+        } else {
+            panel = new NormalGamePanel(players, menager);
         }
 
         this.add(panel);
@@ -128,9 +127,4 @@ public class GameFrame extends JFrame{
         JOptionPane.INFORMATION_MESSAGE
         );
     }
-        
-
-        /*gameFramePanel = new GameFramePanel(menager);
-
-        this.add(gameFramePanel);*/
 }

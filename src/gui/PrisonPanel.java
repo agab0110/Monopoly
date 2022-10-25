@@ -14,7 +14,6 @@ public class PrisonPanel extends JPanel{
     private JButton exitPrisonButton;
     private JButton payExitPrisonButton;
 
-    //private int index = GameFramePanel.i;
     private int index = GameFrame.i;
 
     public PrisonPanel(List<Player> players, Menager menager) {
