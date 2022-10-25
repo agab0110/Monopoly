@@ -20,10 +20,12 @@ public class NormalGamePanel extends JPanel {
 
     private Menager menager;
 
-    private int index = GameFramePanel.i;
+    //private int index = GameFramePanel.i;
+    private int index = GameFrame.i;
 
     public NormalGamePanel(List<Player> players, Menager menager) {
         this.menager = menager;
+        this.setLayout(null);
 
         buyContractsButton = new JButton("Acquista contratto");
         payRentButton = new JButton("Paga affitto");

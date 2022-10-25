@@ -1,4 +1,4 @@
-package gui;
+/*package gui;
 
 import java.io.IOException;
 import java.util.List;
@@ -80,7 +80,6 @@ public class GameFramePanel extends JPanel{
             panel = new PrisonPanel(players, menager);
         }
 
-        panel.setLayout(null);
         this.add(panel);
         panel.setVisible(true);
     }
@@ -121,4 +120,4 @@ public class GameFramePanel extends JPanel{
         );
     }
 
-}
+}*/

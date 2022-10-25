@@ -14,9 +14,11 @@ public class PrisonPanel extends JPanel{
     private JButton exitPrisonButton;
     private JButton payExitPrisonButton;
 
-    private int index = GameFramePanel.i;
+    //private int index = GameFramePanel.i;
+    private int index = GameFrame.i;
 
     public PrisonPanel(List<Player> players, Menager menager) {
+        this.setLayout(null);
 
         exitPrisonButton = new JButton("Esci di prigione gratutitamente");
         payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
