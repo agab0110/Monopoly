@@ -17,6 +17,8 @@ import app.Player;
 public class GameFramePanel extends JPanel{
     public static int i = 0;
 
+    private JPanel panel;
+
     private JTextField textField;
     private JTextArea textArea;
 
@@ -25,8 +27,6 @@ public class GameFramePanel extends JPanel{
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
-
-    private JPanel panel;
     
     public GameFramePanel(Menager menager) { 
         this.setLayout(null);
