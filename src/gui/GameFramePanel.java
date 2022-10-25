@@ -80,6 +80,7 @@ public class GameFramePanel extends JPanel{
             panel = new PrisonPanel(players, menager);
         }
 
+        panel.setLayout(null);
         this.add(panel);
         panel.setVisible(true);
     }
