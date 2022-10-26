@@ -13,6 +13,7 @@ import app.Player;
 
 public class NewPlayerFrame extends JFrame{
     private String[] pawns = {"ditale", "carriola", "scarpa", "cane", "macchina", "ferro", "cappello", "nave"};
+    private List<Player> players;
     
     private JLabel nameLabel;
     private JLabel pawnLabel;
@@ -49,6 +50,20 @@ public class NewPlayerFrame extends JFrame{
         panel.add(textField);
         panel.add(comboBox);
         panel.add(sendButton);
+
+        insertAction();
+    }
+
+    private void insertAction() {
+        String name = new String();
+        String pawn = new String();
+
+        name = textField.getText();
+        pawn = comboBox.getSelectedItem().toString();
+
+        Player player = new Player(name);
+
+        players.add(player);
     }
     
 }
