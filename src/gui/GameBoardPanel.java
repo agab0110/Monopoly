@@ -37,6 +37,8 @@ public class GameBoardPanel extends JPanel{
             setCoordinates();
 
             this.add(nameLabel);
+
+            setCoordinates();
         }
     }
 

@@ -64,16 +64,19 @@ public class NewPlayerFrame extends JFrame {
         sendButton.addActionListener(
             e -> {
                 String name = new String();
+                String temp = new String();
                 Color color;
 
                 name = textField.getText();
-                color = (Color) comboBox.getSelectedItem();
+                temp = (String) comboBox.getSelectedItem();
+
+                color = stringToColor(temp);
 
                 Player player = new Player(name, color);
 
-                for (Player p : players) {            
+                for (Player p: players) {            
                     try {
-                        if (p.getName().equals(name) || p.getColor().equals(color)) {
+                        if (p.getName().equals(name) || p.getColor() == color) {
                             throw new PlayerException();
                         } else {
                             this.players.add(player);
@@ -90,6 +93,25 @@ public class NewPlayerFrame extends JFrame {
                 this.dispose();
             }
         );
+    }
+
+    private Color stringToColor(String temp) {
+        switch (temp) {
+            case "rosso":
+                return Color.RED;
+            case "blu":
+                return Color.BLUE;
+            case "verde":
+                return Color.GREEN;
+            case "giallo":
+                return Color.YELLOW;
+            case "arancione":
+                return Color.ORANGE;
+            case "azzurro":
+                return Color.CYAN;
+            default:
+                return null;
+        }
     }
     
 }
