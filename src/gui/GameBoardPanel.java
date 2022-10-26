@@ -13,7 +13,7 @@ public class GameBoardPanel extends JPanel{
 
         label = new JLabel(new ImageIcon("src\\gui\\images\\tabellone.jpg"));
 
-        label.setBounds(0, 30, 512, 512);
+        label.setBounds(0, 0, 512, 512);
         label.setOpaque(true);
 
         this.add(label);

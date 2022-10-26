@@ -85,7 +85,7 @@ public class GameFrame extends JFrame{
         );
 
         imagePanel = new GameBoardPanel();
-        imagePanel.setBounds(0, 30, 512, 512);
+        imagePanel.setBounds(0, 60, 512, 512);
         this.add(imagePanel);
         imagePanel.setVisible(true);
         
