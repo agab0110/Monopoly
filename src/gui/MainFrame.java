@@ -140,20 +140,8 @@ public class MainFrame extends JFrame{
     }
 
     private void addNewPlayer() throws PlayerException{        
-        String name = JOptionPane.showInputDialog(
-            null,
-            "Inserire un nuovo giocatore",
-            "Nuovo giocatore",
-            JOptionPane.OK_CANCEL_OPTION
-            );
-
-        for (Player player : players) {
-            if (name.equals(player.getName())) {
-                throw new PlayerException("Nome duplicato");
-            }
-        }
-        Player player = new Player(name);
-        this.players.add(player);
+        NewPlayerFrame newPlayerFrame = new NewPlayerFrame(players);
+        newPlayerFrame.setVisible(true);
     }
 
     private void startGame() {

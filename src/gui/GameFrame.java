@@ -1,13 +1,11 @@
 package gui;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
