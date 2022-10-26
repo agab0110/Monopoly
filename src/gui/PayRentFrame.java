@@ -18,7 +18,7 @@ public class PayRentFrame extends JFrame{
         this.setSize(350, 500);
         this.setLocationRelativeTo(null);
         this.setLocationRelativeTo(null);
-        this.setTitle("Monopoli");
+        this.setTitle("Paga affitto");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         panel = new JPanel();

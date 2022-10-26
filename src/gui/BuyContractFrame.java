@@ -18,7 +18,7 @@ public class BuyContractFrame extends JFrame{
         this.setSize(450, 500);
         this.setLocationRelativeTo(null);
         this.setLocationRelativeTo(null);
-        this.setTitle("Monopoli");
+        this.setTitle("Acquista contratto");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         panel = new JPanel(); 
