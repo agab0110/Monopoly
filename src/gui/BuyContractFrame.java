@@ -15,10 +15,13 @@ public class BuyContractFrame extends JFrame{
     private JPanel panel;
 
     public BuyContractFrame(Player player, Menager menager) {
-        panel = new JPanel();
-
         this.setSize(450, 500);
         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Monopoli");
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        panel = new JPanel(); 
 
         for (Contract contract : menager.getContracts()) {
             if (contract.getOwner() == null) {

@@ -15,10 +15,13 @@ public class PayRentFrame extends JFrame{
     private JPanel panel;
 
     public PayRentFrame(Player player, Menager menager) {
-        panel = new JPanel();
-
         this.setSize(350, 500);
         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Monopoli");
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        panel = new JPanel();
 
         for (Contract contract : menager.getContracts()) {
             if (contract.getOwner() != null && contract.getOwner() != player) {
