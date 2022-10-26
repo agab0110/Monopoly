@@ -128,7 +128,7 @@ public class GameFrame extends JFrame{
         return contractName;
     }
 
-    public static void throwDice(){
+    public void throwDice(){
         Random random = new Random();
         JOptionPane.showMessageDialog(
         null,
