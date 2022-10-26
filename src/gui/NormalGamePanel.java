@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -17,14 +18,12 @@ public class NormalGamePanel extends JPanel {
     private JButton passStartButton;
     private JButton goToPrisonButton;
     
-
+    private List<Player> players;
     private Menager menager;
-
-    //private int index = GameFramePanel.i;
-    private int index = GameFrame.i;
 
     public NormalGamePanel(List<Player> players, Menager menager) {
         this.menager = menager;
+        this.players = players;
         this.setLayout(null);
 
         buyContractsButton = new JButton("Acquista contratto");
@@ -45,42 +44,25 @@ public class NormalGamePanel extends JPanel {
         this.add(passStartButton);
         this.add(goToPrisonButton);
 
-        addAction(players.get(index));
+        addAction(players.get(GameFrame.i));
     }
 
     private void addAction(Player player) {
         buyContractsButton.addActionListener(
             e -> {
-                buyContract(player);
+                buyContractAction(player);
             }
         );
 
         payRentButton.addActionListener(
             e -> {
-                payRent(player);
+                payRentAction(player);
             }
         );
 
         payTaxButton.addActionListener(
             e -> {
-                int tax = 0;
-                String s = JOptionPane.showInputDialog("Inserire l'importo ");
-                try{
-                    tax = Integer.parseInt(s);
-                }
-                catch (NumberFormatException ex){
-                    ex.printStackTrace();
-                }
-                
-                try {
-                    player.subMoney(tax);
-                } catch (MoneyExeption e1) {
-                    JOptionPane.showMessageDialog(null,
-                    "Errore: " + e1.getMessage(), 
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE
-                    );
-                }
+                payTaxAction(player);
             }
         );
 
@@ -92,19 +74,77 @@ public class NormalGamePanel extends JPanel {
 
         goToPrisonButton.addActionListener(
             e -> {
-                player.setStatus(true);
+                prisonAction();
             }
         );
     }
 
-    private void payRent(Player player) {
+    private void payRentAction(Player player) {
         PayRentFrame payRentFrame = new PayRentFrame(player, menager);
         payRentFrame.setVisible(true);
     }
 
-    private void buyContract(Player player){
+    private void buyContractAction(Player player){
         BuyContractFrame buyContractFrame = new BuyContractFrame(player, menager);
         buyContractFrame.setVisible(true);   
     }
 
+    private void payTaxAction(Player player) {
+        int tax = 0;
+        String s = JOptionPane.showInputDialog("Inserire l'importo ");
+        try{
+            tax = Integer.parseInt(s);
+        }
+        catch (NumberFormatException ex){
+            ex.printStackTrace();
+        }
+                
+        try {
+            player.subMoney(tax);
+        } catch (MoneyExeption e1) {
+            JOptionPane.showMessageDialog(null,
+            "Errore: " + e1.getMessage(), 
+            "Errore",
+            JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    private void prisonAction() {
+        players.get(GameFrame.i).setStatus(true);
+
+        try {
+            menager.saveMenager();
+        } catch (IOException e1) {
+            JOptionPane.showMessageDialog(
+            null, 
+            "Errore salvataggio",
+            "Errore",
+            JOptionPane.ERROR_MESSAGE);
+        }
+
+        GameFrame.i++;
+
+        if (GameFrame.i == players.size()) {
+            GameFrame.i = 0;
+        }
+
+        showpanel();
+    }
+    
+    private void showpanel() {
+        JPanel panel;
+
+        if(players.get(GameFrame.i).getStatus() == true) {
+            panel = new PrisonPanel(players, menager);
+        } else {
+            panel = new NormalGamePanel(players, menager);
+        }
+
+        GameFrame.getInstance().remove(this);        
+        GameFrame.getInstance().add(panel);
+        panel.setVisible(true);
+
+        GameFrame.throwDice();
+    }
 }

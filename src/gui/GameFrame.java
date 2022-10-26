@@ -30,7 +30,7 @@ public class GameFrame extends JFrame{
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
-    private static JFrame frame;
+    private static GameFrame frame;
 
     public GameFrame(Menager menager) {
         this.frame = this;
@@ -82,7 +82,7 @@ public class GameFrame extends JFrame{
         );
         showPanel();
         throwDice();
-        update();
+        updateThread();
     }
 
     private void showPanel() {
@@ -96,8 +96,7 @@ public class GameFrame extends JFrame{
         panel.setVisible(true);
     }
 
-
-    private void update() {
+    public void updateThread() {
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
@@ -123,7 +122,7 @@ public class GameFrame extends JFrame{
         return contractName;
     }
 
-    private void throwDice(){
+    public static void throwDice(){
         Random random = new Random();
         JOptionPane.showMessageDialog(
         null,
@@ -133,7 +132,8 @@ public class GameFrame extends JFrame{
         );
     }
 
-    public static JFrame getInstance() {
+    public static GameFrame getInstance() {
         return frame;
     }
+
 }
