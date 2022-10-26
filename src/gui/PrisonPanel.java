@@ -21,11 +21,11 @@ public class PrisonPanel extends JPanel{
         this.players = players;
         this.menager = menager;
 
-        exitPrisonButton = new JButton("Esci di prigione gratutitamente");
-        payExitPrisonButton = new JButton("Esci di prigione pagando 50€");
+        exitPrisonButton = new JButton("<html>Esci di prigione<br> gratutitamente</html>");
+        payExitPrisonButton = new JButton("<html>Esci di prigione<br>pagando 50€</html>");
         
-        exitPrisonButton.setBounds(490, 390, 210, 30);
-        payExitPrisonButton.setBounds(490, 550, 210, 30);
+        exitPrisonButton.setBounds(540, 390, 150, 70);
+        payExitPrisonButton.setBounds(540, 470, 150, 70);
 
         this.add(exitPrisonButton);
         this.add(payExitPrisonButton);
