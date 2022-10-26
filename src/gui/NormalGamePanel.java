@@ -112,7 +112,6 @@ public class NormalGamePanel extends JPanel {
     
     private void prisonAction() {
         players.get(GameFrame.i).setStatus(true);
-        showpanel();
 
         try {
             menager.saveMenager();
@@ -129,6 +128,8 @@ public class NormalGamePanel extends JPanel {
         if (GameFrame.i == players.size()) {
             GameFrame.i = 0;
         }
+
+        showpanel();
     }
     
     private void showpanel() {
