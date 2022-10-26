@@ -1,11 +1,13 @@
 package gui;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +23,7 @@ public class GameFrame extends JFrame{
     public static int i = 0;
 
     private JPanel panel;
+    private GameBoardPanel imagePanel;
 
     private JTextField textField;
     private JTextArea textArea;
@@ -33,7 +36,7 @@ public class GameFrame extends JFrame{
     private static GameFrame frame;
 
     public GameFrame(Menager menager) {
-        this.frame = this;
+        GameFrame.frame = this;
 
         this.setSize(720,720);
         setResizable(false);
@@ -76,10 +79,16 @@ public class GameFrame extends JFrame{
                         JOptionPane.ERROR_MESSAGE);
                 }
                 this.remove(panel);
-                throwDice();
+                
                 showPanel();
             }
         );
+
+        imagePanel = new GameBoardPanel();
+        imagePanel.setBounds(0, 60, 512, 512);
+        this.add(imagePanel);
+        imagePanel.setVisible(true);
+        
         showPanel();
         throwDice();
         updateThread();
@@ -122,7 +131,7 @@ public class GameFrame extends JFrame{
         return contractName;
     }
 
-    public static void throwDice(){
+    public void throwDice(){
         Random random = new Random();
         JOptionPane.showMessageDialog(
         null,

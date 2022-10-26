@@ -145,6 +145,6 @@ public class NormalGamePanel extends JPanel {
         GameFrame.getInstance().add(panel);
         panel.setVisible(true);
 
-        GameFrame.throwDice();
+        GameFrame.getInstance().throwDice();
     }
 }
