@@ -1,5 +1,21 @@
 package gui;
 
-public class GameBoardPanel {
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class GameBoardPanel extends JPanel{
+    private JLabel label;
+    private ImageIcon img;
+
+
+    public GameBoardPanel() {
+        img = new ImageIcon("src/gui/images/tabellone.jpg");
+        label = new JLabel();
+
+        label.setBounds(0, 0, 500, 500);
+        label.setIcon(img);
+        label.setOpaque(true);
+    }
     
 }

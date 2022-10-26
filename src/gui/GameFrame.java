@@ -21,6 +21,7 @@ public class GameFrame extends JFrame{
     public static int i = 0;
 
     private JPanel panel;
+    private JPanel imagePanel;
 
     private JTextField textField;
     private JTextArea textArea;
@@ -76,10 +77,15 @@ public class GameFrame extends JFrame{
                         JOptionPane.ERROR_MESSAGE);
                 }
                 this.remove(panel);
-                throwDice();
+                
                 showPanel();
             }
         );
+
+        imagePanel = new GameBoardPanel();
+        this.add(imagePanel);
+        imagePanel.setVisible(true);
+        
         showPanel();
         throwDice();
         updateThread();
