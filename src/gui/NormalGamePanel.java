@@ -50,19 +50,19 @@ public class NormalGamePanel extends JPanel {
     private void addAction(Player player) {
         buyContractsButton.addActionListener(
             e -> {
-                buyContract(player);
+                buyContractAction(player);
             }
         );
 
         payRentButton.addActionListener(
             e -> {
-                payRent(player);
+                payRentAction(player);
             }
         );
 
         payTaxButton.addActionListener(
             e -> {
-                taxAction(player);
+                payTaxAction(player);
             }
         );
 
@@ -79,17 +79,17 @@ public class NormalGamePanel extends JPanel {
         );
     }
 
-    private void payRent(Player player) {
+    private void payRentAction(Player player) {
         PayRentFrame payRentFrame = new PayRentFrame(player, menager);
         payRentFrame.setVisible(true);
     }
 
-    private void buyContract(Player player){
+    private void buyContractAction(Player player){
         BuyContractFrame buyContractFrame = new BuyContractFrame(player, menager);
         buyContractFrame.setVisible(true);   
     }
 
-    private void taxAction(Player player) {
+    private void payTaxAction(Player player) {
         int tax = 0;
         String s = JOptionPane.showInputDialog("Inserire l'importo ");
         try{
@@ -114,12 +114,6 @@ public class NormalGamePanel extends JPanel {
         players.get(GameFrame.i).setStatus(true);
         showpanel();
 
-        GameFrame.i++;
-
-        if (GameFrame.i == players.size()) {
-            GameFrame.i = 0;
-        }
-
         try {
             menager.saveMenager();
         } catch (IOException e1) {
@@ -130,8 +124,11 @@ public class NormalGamePanel extends JPanel {
             JOptionPane.ERROR_MESSAGE);
         }
 
-        
-        GameFrame.getInstance().updateThread();
+        GameFrame.i++;
+
+        if (GameFrame.i == players.size()) {
+            GameFrame.i = 0;
+        }
     }
     
     private void showpanel() {
@@ -143,10 +140,10 @@ public class NormalGamePanel extends JPanel {
             panel = new NormalGamePanel(players, menager);
         }
 
-        GameFrame.getInstance().remove(this);
-        GameFrame.throwDice();
-        
+        GameFrame.getInstance().remove(this);        
         GameFrame.getInstance().add(panel);
         panel.setVisible(true);
+
+        GameFrame.throwDice();
     }
 }
