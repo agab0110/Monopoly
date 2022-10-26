@@ -81,10 +81,6 @@ public class GameFrame extends JFrame{
                 showPanel();
             }
         );
-
-        imagePanel = new GameBoardPanel();
-        this.add(imagePanel);
-        imagePanel.setVisible(true);
         
         showPanel();
         throwDice();
@@ -92,6 +88,10 @@ public class GameFrame extends JFrame{
     }
 
     private void showPanel() {
+        imagePanel = new GameBoardPanel();
+        this.add(imagePanel);
+        imagePanel.setVisible(true);
+
         if(players.get(i).getStatus() == true) {
             panel = new PrisonPanel(players, menager);
         } else {
