@@ -6,12 +6,14 @@ import java.util.List;
 
 public class Player implements Serializable {
     private String name;
+    private String pawn;
     private boolean prison;    
     private int money;
     private List<Contract> contracts;
 
-    public Player(String name) {
+    public Player(String name, String pawn) {
         this.name = name;
+        this.pawn = pawn;
         contracts = new ArrayList<>();
     }
 
@@ -54,5 +56,9 @@ public class Player implements Serializable {
         }
         
         this.money -= money;
+    }
+
+    public String getPawn() {
+        return this.pawn;
     }
 }

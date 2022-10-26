@@ -6,12 +6,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import app.Player;
+import app.PlayerException;
 
-public class NewPlayerFrame extends JFrame{
+public class NewPlayerFrame extends JFrame {
     private String[] pawns = {"ditale", "carriola", "scarpa", "cane", "macchina", "ferro", "cappello", "nave"};
     private List<Player> players;
     
@@ -23,12 +25,14 @@ public class NewPlayerFrame extends JFrame{
 
     private JPanel panel;
 
-    public NewPlayerFrame(List<Player> players) {
+    public NewPlayerFrame(List<Player> players) throws PlayerException {
         this.setSize(400,200);
         setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Nuovo giocatore");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        this.players = players;
 
         panel = new JPanel();
         nameLabel = new JLabel("Nome");
@@ -55,15 +59,35 @@ public class NewPlayerFrame extends JFrame{
     }
 
     private void insertAction() {
-        String name = new String();
-        String pawn = new String();
+        sendButton.addActionListener(
+            e -> {
+                String name = new String();
+                String pawn = new String();
 
-        name = textField.getText();
-        pawn = comboBox.getSelectedItem().toString();
+                name = textField.getText();
+                pawn = comboBox.getSelectedItem().toString();
 
-        Player player = new Player(name);
+                Player player = new Player(name, pawn);
 
-        players.add(player);
+                for (Player p : players) {            
+                    try {
+                        if (p.getName().equals(name) || p.getPawn().equals(pawn)) {
+                            throw new PlayerException();
+                        } else {
+                            this.players.add(player);
+                        }
+                    } catch (PlayerException e1) {
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "Errore" + e1.getMessage(),
+                            "Errore",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }       
+                }
+                this.dispose();
+            }
+        );
     }
     
 }
