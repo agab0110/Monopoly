@@ -10,10 +10,12 @@ public class GameBoardPanel extends JPanel{
 
 
     public GameBoardPanel() {
+        this.setLayout(null);
+
         img = new ImageIcon("src/gui/images/tabellone.jpg");
         label = new JLabel();
 
-        label.setBounds(0, 0, 500, 500);
+        label.setBounds(0, 0, 512, 512);
         label.setIcon(img);
         label.setOpaque(true);
     }
