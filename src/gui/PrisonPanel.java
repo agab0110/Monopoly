@@ -38,8 +38,11 @@ public class PrisonPanel extends JPanel{
             e -> {
                 player.setStatus(false);
 
+                JPanel panel = new NormalGamePanel(players, menager);
+
                 GameFrame.getInstance().remove(this);
-                GameFrame.getInstance().add(new NormalGamePanel(players, menager));
+                GameFrame.getInstance().add(panel);
+                panel.setVisible(true);
             }
         );
 
@@ -57,8 +60,11 @@ public class PrisonPanel extends JPanel{
                 }
                 player.setStatus(false);
                 
+                JPanel panel = new NormalGamePanel(players, menager);
+
                 GameFrame.getInstance().remove(this);
-                GameFrame.getInstance().add(new NormalGamePanel(players, menager));
+                GameFrame.getInstance().add(panel);
+                panel.setVisible(true);
             }
         );
     }
