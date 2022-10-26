@@ -82,7 +82,7 @@ public class GameFrame extends JFrame{
             }
         );
 
-        imagePanel = new GameBoardPanel();
+        imagePanel = new GameBoardPanel(players);
         imagePanel.setBounds(0, 60, 512, 512);
         this.add(imagePanel);
         imagePanel.setVisible(true);

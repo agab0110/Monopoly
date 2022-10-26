@@ -10,11 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.awt.Color;
+
 import app.Player;
 import app.PlayerException;
 
 public class NewPlayerFrame extends JFrame {
-    private String[] pawns = {"ditale", "carriola", "scarpa", "cane", "macchina", "ferro", "cappello", "nave"};
+    private String[] colors = {"rosso", "blu", "verde", "giallo", "arancione", "azzurro"};
     private List<Player> players;
     
     private JLabel nameLabel;
@@ -31,14 +33,14 @@ public class NewPlayerFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Nuovo giocatore");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        
         this.players = players;
 
         panel = new JPanel();
         nameLabel = new JLabel("Nome");
         pawnLabel = new JLabel("Pedina");
         textField = new JTextField();
-        comboBox = new JComboBox(pawns);
+        comboBox = new JComboBox(colors);
         sendButton = new JButton("Inserisci");
 
         panel.setLayout(null);
@@ -62,16 +64,16 @@ public class NewPlayerFrame extends JFrame {
         sendButton.addActionListener(
             e -> {
                 String name = new String();
-                String pawn = new String();
+                Color color;
 
                 name = textField.getText();
-                pawn = comboBox.getSelectedItem().toString();
+                color = (Color) comboBox.getSelectedItem();
 
-                Player player = new Player(name, pawn);
+                Player player = new Player(name, color);
 
                 for (Player p : players) {            
                     try {
-                        if (p.getName().equals(name) || p.getPawn().equals(pawn)) {
+                        if (p.getName().equals(name) || p.getColor().equals(color)) {
                             throw new PlayerException();
                         } else {
                             this.players.add(player);
