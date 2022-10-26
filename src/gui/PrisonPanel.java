@@ -16,8 +16,6 @@ public class PrisonPanel extends JPanel{
     private List<Player> players;
     private Menager menager;
 
-    private int index = GameFrame.i;
-
     public PrisonPanel(List<Player> players, Menager menager) {
         this.setLayout(null);
         this.players = players;
@@ -32,7 +30,7 @@ public class PrisonPanel extends JPanel{
         this.add(exitPrisonButton);
         this.add(payExitPrisonButton);
 
-        addAction(players.get(index));
+        addAction(players.get(GameFrame.i));
     }
 
     private void addAction(Player player) {

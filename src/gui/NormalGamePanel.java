@@ -21,8 +21,6 @@ public class NormalGamePanel extends JPanel {
     private List<Player> players;
     private Menager menager;
 
-    private int index = GameFrame.i;
-
     public NormalGamePanel(List<Player> players, Menager menager) {
         this.menager = menager;
         this.players = players;
@@ -46,7 +44,7 @@ public class NormalGamePanel extends JPanel {
         this.add(passStartButton);
         this.add(goToPrisonButton);
 
-        addAction(players.get(index));
+        addAction(players.get(GameFrame.i));
     }
 
     private void addAction(Player player) {
@@ -114,6 +112,7 @@ public class NormalGamePanel extends JPanel {
     
     private void prisonAction() {
         players.get(GameFrame.i).setStatus(true);
+        showpanel();
 
         GameFrame.i++;
 
@@ -131,21 +130,21 @@ public class NormalGamePanel extends JPanel {
             JOptionPane.ERROR_MESSAGE);
         }
 
-        GameFrame.getInstance().remove(this);
-        GameFrame.throwDice();
-
-        showpanel();
+        
         GameFrame.getInstance().updateThread();
     }
     
     private void showpanel() {
         JPanel panel;
 
-        if(players.get(index).getStatus() == true) {
+        if(players.get(GameFrame.i).getStatus() == true) {
             panel = new PrisonPanel(players, menager);
         } else {
             panel = new NormalGamePanel(players, menager);
         }
+
+        GameFrame.getInstance().remove(this);
+        GameFrame.throwDice();
         
         GameFrame.getInstance().add(panel);
         panel.setVisible(true);
