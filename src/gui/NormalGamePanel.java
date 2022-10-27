@@ -21,9 +21,9 @@ public class NormalGamePanel extends JPanel {
     private List<Player> players;
     private Menager menager;
 
-    public NormalGamePanel(List<Player> players, Menager menager) {
+    public NormalGamePanel(Menager menager) {
         this.menager = menager;
-        this.players = players;
+        this.players = menager.getPlayers();
         this.setLayout(null);
 
         buyContractsButton = new JButton("Acquista contratto");
@@ -136,9 +136,9 @@ public class NormalGamePanel extends JPanel {
         JPanel panel;
 
         if(players.get(GameFrame.i).getStatus() == true) {
-            panel = new PrisonPanel(players, menager);
+            panel = new PrisonPanel(menager);
         } else {
-            panel = new NormalGamePanel(players, menager);
+            panel = new NormalGamePanel(menager);
         }
 
         GameFrame.getInstance().remove(this);        

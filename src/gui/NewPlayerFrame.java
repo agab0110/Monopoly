@@ -1,7 +1,5 @@
 package gui;
 
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -12,12 +10,12 @@ import javax.swing.JTextField;
 
 import java.awt.Color;
 
+import app.Menager;
 import app.Player;
 import app.PlayerException;
 
 public class NewPlayerFrame extends JFrame {
     private String[] colors = {"rosso", "blu", "verde", "giallo", "arancione", "azzurro"};
-    private List<Player> players;
     
     private JLabel nameLabel;
     private JLabel pawnLabel;
@@ -27,14 +25,16 @@ public class NewPlayerFrame extends JFrame {
 
     private JPanel panel;
 
-    public NewPlayerFrame(List<Player> players) throws PlayerException {
+    private Menager menager;
+
+    public NewPlayerFrame(Menager menager) throws PlayerException {
+        this.menager = menager;
+
         this.setSize(400,200);
         setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Nuovo giocatore");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        this.players = players;
 
         panel = new JPanel();
         nameLabel = new JLabel("Nome");
@@ -60,7 +60,7 @@ public class NewPlayerFrame extends JFrame {
         insertAction();
     }
 
-    private void insertAction() {
+    private void insertAction() throws PlayerException{
         sendButton.addActionListener(
             e -> {
                 String name = new String();
@@ -74,25 +74,19 @@ public class NewPlayerFrame extends JFrame {
 
                 Player player = new Player(name, color);
 
-                for (Player p: players) {            
-                    try {
-                        if (p.getName().equals(name) || p.getColor() == color) {
-                            throw new PlayerException();
-                        } else {
-                            this.players.add(player);
-                        }
-                    } catch (PlayerException e1) {
-                        JOptionPane.showMessageDialog(
-                            null,
-                            "Errore" + e1.getMessage(),
-                            "Errore",
-                            JOptionPane.ERROR_MESSAGE
+                try {
+                    menager.addPlayer(player);
+                } catch (PlayerException e1) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Errore" + e1.getMessage(),
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE
                         );
-                    }       
-                }
-                this.dispose();
+                    }
             }
         );
+            this.dispose();
     }
 
     private Color stringToColor(String temp) {

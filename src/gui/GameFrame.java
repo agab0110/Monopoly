@@ -94,9 +94,9 @@ public class GameFrame extends JFrame{
 
     private void showPanel() {
         if(players.get(i).getStatus() == true) {
-            panel = new PrisonPanel(players, menager);
+            panel = new PrisonPanel(menager);
         } else {
-            panel = new NormalGamePanel(players, menager);
+            panel = new NormalGamePanel(menager);
         }
 
         this.add(panel);
