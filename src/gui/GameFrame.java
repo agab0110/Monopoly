@@ -21,7 +21,7 @@ public class GameFrame extends JFrame{
     public static int i = 0;
 
     private JPanel panel;
-    private GameBoardPanel imagePanel;
+    private GameBoardPanel gameBoardPanel;
 
     private JTextField textField;
     private JTextArea textArea;
@@ -82,10 +82,10 @@ public class GameFrame extends JFrame{
             }
         );
 
-        imagePanel = new GameBoardPanel(players);
-        imagePanel.setBounds(0, 60, 512, 512);
-        this.add(imagePanel);
-        imagePanel.setVisible(true);
+        gameBoardPanel = new GameBoardPanel(players);
+        gameBoardPanel.setBounds(0, 60, 512, 512);
+        this.add(gameBoardPanel);
+        gameBoardPanel.setVisible(true);
         
         showPanel();
         throwDice();
