@@ -26,19 +26,19 @@ public class GameBoardPanel extends JPanel{
 
         this.add(imageLabel);
 
+        nameLabel = new JLabel();
+
         createPawn();
+        
     }
     
     private void createPawn() {
         for (Player player : players) {
-            JLabel nameLabel = new JLabel();
             nameLabel.setText(player.getName());
             nameLabel.setForeground(player.getColor());
             setCoordinates();
 
             this.add(nameLabel);
-
-            setCoordinates();
         }
     }
 

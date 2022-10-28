@@ -18,7 +18,7 @@ public class Menager implements Serializable{
     public void constructor(){
         this.players = new ArrayList<>();
         this.contracts = new ArrayList<>();
-        start();
+        //start();
     }
 
     public static Menager loadMenager() throws IOException {

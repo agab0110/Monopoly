@@ -24,6 +24,9 @@ public class MainFrame extends JFrame{
     private Menager menager;
 
     public MainFrame(){
+        menager = new Menager();
+        menager.constructor();
+
         this.setTitle("Monopoly");
         setResizable(false);
         this.setSize(500,500);
@@ -139,9 +142,7 @@ public class MainFrame extends JFrame{
     }
 
     private void startGame() {
-        menager = new Menager();
-        menager.constructor();
-
+        menager.start();
         GameFrame gameFrame = new GameFrame(menager);
         gameFrame.setVisible(true);
 

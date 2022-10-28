@@ -79,14 +79,15 @@ public class NewPlayerFrame extends JFrame {
                 } catch (PlayerException e1) {
                     JOptionPane.showMessageDialog(
                         null,
-                        "Errore" + e1.getMessage(),
+                        "Errore " + e1.getMessage(),
                         "Errore",
                         JOptionPane.ERROR_MESSAGE
                         );
                     }
+                    
+                this.dispose();
             }
         );
-            this.dispose();
     }
 
     private Color stringToColor(String temp) {
