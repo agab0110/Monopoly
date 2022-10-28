@@ -76,10 +76,8 @@ public class GameFrame extends JFrame{
                         "Errore",
                         JOptionPane.ERROR_MESSAGE);
                 }
-                this.remove(gameBoardPanel);
                 this.remove(panel);
 
-                addGameBoard();
                 showPanel();
             }
         );
