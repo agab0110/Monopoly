@@ -18,7 +18,6 @@ public class Menager implements Serializable{
     public void constructor(){
         this.players = new ArrayList<>();
         this.contracts = new ArrayList<>();
-        //start();
     }
 
     public static Menager loadMenager() throws IOException {
@@ -180,12 +179,14 @@ public class Menager implements Serializable{
 
     public void addPlayer(Player player) throws PlayerException{
         for (Player p : players) {
+            if (player.getName() == null) {
+                throw new PlayerException("Il nome non può essere vuoto");
+            }
             if (p.getName().equals(player.getName())) {
                 throw new PlayerException("Nome duplicato");
-            } else {
-                if (p.getColor().equals(player.getColor())) {
-                    throw new PlayerException("Colore duplicato");
-                }
+            }
+            if (p.getColor().equals(player.getColor())) {
+                throw new PlayerException("Colore duplicato");
             }
         }
 

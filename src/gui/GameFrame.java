@@ -77,16 +77,14 @@ public class GameFrame extends JFrame{
                         JOptionPane.ERROR_MESSAGE);
                 }
                 this.remove(panel);
-                
+
                 showPanel();
             }
         );
 
         gameBoardPanel = new GameBoardPanel(players);
-        gameBoardPanel.setBounds(0, 60, 512, 512);
-        this.add(gameBoardPanel);
-        gameBoardPanel.setVisible(true);
         
+        addGameBoard();
         showPanel();
         throwDice();
         updateThread();
@@ -143,4 +141,9 @@ public class GameFrame extends JFrame{
         return frame;
     }
 
+    private void addGameBoard() {
+        gameBoardPanel.setBounds(0, 60, 512, 512);
+        this.add(gameBoardPanel);
+        gameBoardPanel.setVisible(true);
+    }
 }
