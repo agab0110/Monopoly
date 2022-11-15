@@ -63,10 +63,13 @@ public class MainFrame extends JFrame{
                     );
 
                 if (answer == 0) {
-                    this.dispose();
                     menager = Menager.loadMenager();
                     GameFrame gameFrame = new GameFrame(menager);
                     gameFrame.setVisible(true);
+                    this.setVisible(false);
+                    this.dispose();
+                } else {
+                    this.setVisible(true);
                 }
             }
         } catch (IOException e) {
