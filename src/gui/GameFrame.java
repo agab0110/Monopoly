@@ -75,7 +75,7 @@ public class GameFrame extends JFrame{
                         "Errore salvataggio",
                         "Errore",
                         JOptionPane.ERROR_MESSAGE);
-                }
+                    }
                 this.remove(panel);
 
                 showPanel();

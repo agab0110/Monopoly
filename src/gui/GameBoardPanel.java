@@ -17,18 +17,17 @@ public class GameBoardPanel extends JPanel{
     public GameBoardPanel(List<Player>players) {
         this.setLayout(null);
 
-        this.players = players;
+       this.players = players;
 
         imageLabel = new JLabel(new ImageIcon("src\\gui\\images\\tabellone.jpg"));
 
         imageLabel.setBounds(0, 0, 512, 512);
         imageLabel.setOpaque(true);
 
-        this.add(imageLabel);
-
         nameLabel = new JLabel();
 
         createPawn();
+        this.add(imageLabel);
         
     }
     
