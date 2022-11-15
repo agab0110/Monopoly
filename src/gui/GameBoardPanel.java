@@ -10,7 +10,6 @@ import app.Player;
 
 public class GameBoardPanel extends JPanel{
     private JLabel imageLabel;
-    private JLabel nameLabel;
     private List<Player> players;
 
 
@@ -24,26 +23,24 @@ public class GameBoardPanel extends JPanel{
         imageLabel.setBounds(0, 0, 512, 512);
         imageLabel.setOpaque(true);
 
-        nameLabel = new JLabel();
-
         createPawn();
         this.add(imageLabel);
         
     }
     
     private void createPawn() {
+        int y = 435;
         for (Player player : players) {
+            JLabel nameLabel = new JLabel();
             nameLabel.setText(player.getName());
             nameLabel.setForeground(player.getColor());
-            setCoordinates();
+            
+            
+            nameLabel.setBounds(435, y, 50, 12);
+            y += 12;
 
             this.add(nameLabel);
         }
     }
 
-    private void setCoordinates() {
-        int y = 435;
-        nameLabel.setBounds(435, y, 50, 12);
-        y += 12;
-    }
 }
