@@ -30,13 +30,13 @@ public class GameBoardPanel extends JPanel{
     
     private void createPawn() {
         int y = 435;
+        
         for (Player player : players) {
             JLabel nameLabel = new JLabel();
             nameLabel.setText(player.getName());
             nameLabel.setForeground(player.getColor());
             
-            
-            nameLabel.setBounds(435, y, 50, 12);
+            nameLabel.setBounds(435, y, 30, 12);
             y += 12;
 
             this.add(nameLabel);

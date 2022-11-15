@@ -20,7 +20,7 @@ public class NewPlayerFrame extends JFrame {
     private JLabel nameLabel;
     private JLabel pawnLabel;
     private JTextField textField;
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
     private JButton sendButton;
 
     private JPanel panel;
@@ -40,7 +40,7 @@ public class NewPlayerFrame extends JFrame {
         nameLabel = new JLabel("Nome");
         pawnLabel = new JLabel("Pedina");
         textField = new JTextField();
-        comboBox = new JComboBox(colors);
+        comboBox = new JComboBox<>(colors);
         sendButton = new JButton("Inserisci");
 
         panel.setLayout(null);
