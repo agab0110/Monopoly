@@ -141,7 +141,7 @@ public class NormalGamePanel extends JPanel {
             panel = new NormalGamePanel(menager);
         }
 
-        GameFrame.getInstance().remove(this);        
+        GameFrame.getInstance().remove(this);     
         GameFrame.getInstance().add(panel);
         panel.setVisible(true);
 

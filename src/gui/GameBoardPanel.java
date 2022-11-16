@@ -34,7 +34,7 @@ public class GameBoardPanel extends JPanel{
             nameLabel.setText(player.getName());
             nameLabel.setForeground(player.getColor());
             
-            nameLabel.setBounds(445, y, 150, 12);
+            nameLabel.setBounds(450, y, 150, 12);
             y += 12;
 
             this.add(nameLabel);

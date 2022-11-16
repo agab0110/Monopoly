@@ -12,6 +12,7 @@ public class Player implements Serializable {
     private boolean prison;    
     private int money;
     private List<Contract> contracts;
+    private int box;
 
     public Player(String name, Color color) {
         this.name = name;
@@ -62,5 +63,17 @@ public class Player implements Serializable {
 
     public Color getColor() {
         return this.color;
+    }
+
+    public int getBox() {
+        return this.box;
+    }
+
+    public void setBox(int dice) {
+        this.box += dice;
+    }
+
+    public void boxStart() {
+        this.box = 0;
     }
 }
