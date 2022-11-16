@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +29,8 @@ public class GameFrame extends JFrame{
 
     private JButton turnOverButton;
 
+    private JLabel label;
+
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
@@ -52,12 +55,16 @@ public class GameFrame extends JFrame{
         textField = new JTextField();
         textArea = new JTextArea();
 
+        label = new JLabel();
+        label.setBounds(10, 10, 100, 30);
+
         textField.setBounds(530, 30, 170, 30);       
         textArea.setBounds(540, 70, 150, 300);
 
         this.add(textField);
         this.add(textArea);
         this.add(turnOverButton);
+        this.add(label);
 
         turnOverButton.addActionListener(
             e -> {
@@ -110,7 +117,7 @@ public class GameFrame extends JFrame{
                 
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
-                
+                label.setText("Tempo rimasto: " + "...");
             }
         });
         thread.start();
