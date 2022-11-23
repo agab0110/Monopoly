@@ -6,6 +6,11 @@ import java.util.List;
 
 import java.awt.Color;
 
+/**
+ * Classe che rappresenta un singolo giocatore
+ * 
+ * @author Alessandro Gabriele
+ */
 public class Player implements Serializable {
     private String name;
     private Color color;
@@ -50,13 +55,24 @@ public class Player implements Serializable {
         return prison;
     }
 
+    /**
+     * La funzione serve ad aggiungere soldi ad un giocatore
+     * 
+     * @param money soldi da aggiungere
+     */
     public void addMoney(int money) {
         this.money += money;
     }
 
-    public void subMoney(int money) throws MoneyExeption {
+    /**
+     * La funzione serve a sottrarre soldi da un giocatore
+     * 
+     * @param money soldi da sottrarre
+     * @throws MoneyException se i soldi non sono sufficienti
+     */
+    public void subMoney(int money) throws MoneyException {
         if (this.money - money < 0) {
-            throw new MoneyExeption("Soldi insufficienti");
+            throw new MoneyException("Soldi insufficienti");
         }
         
         this.money -= money;

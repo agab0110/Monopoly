@@ -57,7 +57,7 @@ public class GameFrame extends JFrame{
         textArea = new JTextArea();
 
         label = new JLabel();
-        label.setBounds(10, 10, 100, 30);
+        label.setBounds(10, 10, 180, 30);
 
         textField.setBounds(530, 30, 170, 30);       
         textArea.setBounds(540, 70, 150, 300);
@@ -94,15 +94,21 @@ public class GameFrame extends JFrame{
 
     public void updateThread() {
         Thread thread = new Thread(() -> {
-            while (true) {
+            int time = 180;
+
+            while (time > 0) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {}
                 
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
-                label.setText("Tempo rimasto: " + "...");
+                
+                label.setText("Tempo rimasto: " + time);
+                time--;
+
             }
+            turnOver();
         });
         thread.start();
     }
@@ -184,5 +190,7 @@ public class GameFrame extends JFrame{
         if (!players.get(i).getStatus()) {
             throwDice();
         }
+
+        updateThread();
     }
 }

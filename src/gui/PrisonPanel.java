@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import app.Menager;
-import app.MoneyExeption;
+import app.MoneyException;
 import app.Player;
 
 public class PrisonPanel extends JPanel{
@@ -52,7 +52,7 @@ public class PrisonPanel extends JPanel{
             e -> {
                 try {
                     player.subMoney(50);
-                } catch (MoneyExeption e1) {
+                } catch (MoneyException e1) {
                     JOptionPane.showMessageDialog(
                         null,
                         "Errore: " + e1.getMessage(),

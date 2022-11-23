@@ -4,7 +4,10 @@ import java.io.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
- 
+
+/**
+ * 
+*/ 
 public class Menager implements Serializable{
     private List<Player> players;
     private List<Contract> contracts;
@@ -158,12 +161,20 @@ public class Menager implements Serializable{
             }
     }
 
-    public void payRent(Player player, Contract contract) throws MoneyExeption{
+    public void payRent(Player player, Contract contract) throws MoneyException{
         player.subMoney(contract.getRent());
         contract.getOwner().addMoney(contract.getRent());
     }
 
-    public void buyContract(Player player, Contract contract) throws MoneyExeption{
+    /**
+     * Metodo per acquistare un contratto,
+     * lancia una MoneyExeption se  
+     * 
+     * @param player il giocatore che acquista
+     * @param contract il contratto da acquistare
+     * @throws MoneyException se i soldi non sono sufficienti
+     */
+    public void buyContract(Player player, Contract contract) throws MoneyException{
         player.subMoney(contract.getPrice());
         contract.setOwner(player);
         player.addContract(contract);
