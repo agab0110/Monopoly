@@ -67,7 +67,6 @@ public class PlayerTest {
         try {
             player.subMoney(100);
         } catch (MoneyException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         

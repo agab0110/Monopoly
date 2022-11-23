@@ -29,13 +29,16 @@ public class GameFrame extends JFrame{
 
     private JButton turnOverButton;
 
-    private JLabel label;
+    private JLabel timer;
+
+    private Thread thread;
 
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
     private static GameFrame frame;
     private int dice;
+    private int time;
 
     public GameFrame(Menager menager) {
         GameFrame.frame = this;
@@ -56,16 +59,16 @@ public class GameFrame extends JFrame{
         textField = new JTextField();
         textArea = new JTextArea();
 
-        label = new JLabel();
-        label.setBounds(10, 10, 180, 30);
-
+        timer = new JLabel();
+        timer.setBounds(10, 10, 180, 30);
+       
         textField.setBounds(530, 30, 170, 30);       
         textArea.setBounds(540, 70, 150, 300);
 
         this.add(textField);
         this.add(textArea);
         this.add(turnOverButton);
-        this.add(label);
+        this.add(timer);
 
         turnOverButton.addActionListener(
             e -> {
@@ -78,7 +81,10 @@ public class GameFrame extends JFrame{
         addGameBoard();
         showPanel();
         throwDice();
-        updateThread();
+
+        if(players.get(GameFrame.i).getStatus() == false){
+            updateThread();
+        }  
     }
 
     private void showPanel() {
@@ -93,8 +99,8 @@ public class GameFrame extends JFrame{
     }
 
     public void updateThread() {
-        Thread thread = new Thread(() -> {
-            int time = 180;
+        thread = new Thread(() -> {
+            time = 180;
 
             while (time > 0) {
                 try {
@@ -103,8 +109,8 @@ public class GameFrame extends JFrame{
                 
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
-                
-                label.setText("Tempo rimasto: " + time);
+
+                timer.setText("Tempo rimasto: " + time);
                 time--;
 
             }
@@ -168,6 +174,8 @@ public class GameFrame extends JFrame{
     }
 
     private void turnOver() {
+        thread.interrupt();
+
         if (players.get(GameFrame.i).getMoney() == 0) {
             JOptionPane.showMessageDialog(
                 null,
@@ -209,7 +217,12 @@ public class GameFrame extends JFrame{
             }
 
             showPanel();
-            updateThread();
+
+            if(players.get(GameFrame.i).getStatus() == false){
+                updateThread();
+            }
+
+            //TODO: risolvere il problema del timer creando un altro thread che aggiorna la label
         }
     }
 }
