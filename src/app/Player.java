@@ -18,6 +18,7 @@ public class Player implements Serializable {
         this.name = name;
         this.color = color;
         contracts = new ArrayList<>();
+        this.box = 0;
     }
 
     public int getMoney() {
@@ -71,9 +72,5 @@ public class Player implements Serializable {
 
     public void setBox() {
         this.box++;
-    }
-
-    public void boxStart() {
-        this.box = 0;
     }
 }

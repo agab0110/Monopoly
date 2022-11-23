@@ -35,6 +35,7 @@ public class GameFrame extends JFrame{
     private List<Contract> contracts;
     private Menager menager;
     private static GameFrame frame;
+    private int dice;
 
     public GameFrame(Menager menager) {
         GameFrame.frame = this;
@@ -86,6 +87,7 @@ public class GameFrame extends JFrame{
                 this.remove(panel);
 
                 showPanel();
+                throwDice();
             }
         );
 
@@ -136,12 +138,16 @@ public class GameFrame extends JFrame{
 
     public void throwDice(){
         Random random = new Random();
+        dice = random.nextInt(2,12);
+
         JOptionPane.showMessageDialog(
         null,
-        random.nextInt(2,12),
+        dice,
         "Dadi",
         JOptionPane.INFORMATION_MESSAGE
         );
+
+        gameBoardPanel.movePlayer();
     }
 
     public static GameFrame getInstance() {

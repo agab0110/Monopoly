@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -11,13 +12,14 @@ import app.Player;
 public class GameBoardPanel extends JPanel{
     private JLabel imageLabel;
     private List<Player> players;
-
+    private ArrayList<JLabel> nameLabels;
 
     public GameBoardPanel(List<Player>players) {
         this.setLayout(null);
         this.setBounds(0,0,512,512);
 
         this.players = players;
+        nameLabels = new ArrayList<>();
 
         imageLabel = new JLabel(new ImageIcon("src\\gui\\images\\tabellone.jpg"));
         imageLabel.setBounds(0, 0, 512, 512);
@@ -38,8 +40,14 @@ public class GameBoardPanel extends JPanel{
             nameLabel.setBounds(450, y, 150, 12);
             y += 12;
 
+            nameLabels.add(nameLabel);
             this.add(nameLabel);
         }
+    }
+
+    public void movePlayer() {
+        nameLabels.get(GameFrame.i).setLocation(nameLabels.get(GameFrame.i).getX() - 40, nameLabels.get(GameFrame.i).getY());
+        players.get(GameFrame.i).setBox();
     }
 
 }

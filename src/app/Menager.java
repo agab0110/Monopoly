@@ -188,8 +188,6 @@ public class Menager implements Serializable{
             if (p.getColor().equals(player.getColor())) {
                 throw new PlayerException("Colore duplicato");
             }
-
-            player.boxStart();
         }
 
         this.players.add(player);
