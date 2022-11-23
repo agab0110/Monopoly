@@ -7,7 +7,8 @@ import java.util.List;
 import java.awt.Color;
 
 /**
- * Classe che rappresenta un singolo giocatore
+ * Classe per la gestione dei giocatori,
+ * la classe viene salvata in menager.sr
  * 
  * @author Alessandro Gabriele
  */

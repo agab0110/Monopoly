@@ -8,6 +8,8 @@ import java.util.*;
 /**
  * Classe per la gestione dei contratti e dei giocatori
  * Questa classe salva il suo stato in menager.sr tenendo conto dei giocatori e contratti presenti
+ * 
+ * @author Alessandro Gabriele
 */ 
 public class Menager implements Serializable{
     private List<Player> players;
