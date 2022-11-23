@@ -43,6 +43,8 @@ public class GameBoardPanel extends JPanel{
             nameLabels.add(nameLabel);
             this.add(nameLabel);
         }
+
+        initializeNameLabel();
     }
 
     public void movePlayer() {
@@ -57,7 +59,35 @@ public class GameBoardPanel extends JPanel{
         }
 
         players.get(GameFrame.i).setBox();
-        
+    }
+
+    public void initializeNameLabel() {
+        int indexPlayer = 0;
+        for (JLabel nameLabel : nameLabels) {
+            int index = 0;
+
+            while (index < 10 && index < players.get(indexPlayer).getBox()) {
+                nameLabel.setLocation(nameLabel.getX() - 42, nameLabel.getY());
+                index++;
+            }
+
+            while (index < 20 && index < players.get(indexPlayer).getBox()) {
+                nameLabel.setLocation(nameLabel.getX(), nameLabel.getY() - 42);
+                index++;
+            }
+
+            while (index < 30 && index < players.get(indexPlayer).getBox()) {
+                nameLabel.setLocation(nameLabel.getX() + 42, nameLabel.getY());
+                index++;
+            }
+
+            while (index < 40 && index < players.get(indexPlayer).getBox()) {
+                nameLabel.setLocation(nameLabel.getX(), nameLabel.getY() + 42);
+                index++;
+            }
+
+            indexPlayer++;
+        }
     }
 
 }

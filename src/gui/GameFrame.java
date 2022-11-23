@@ -147,9 +147,7 @@ public class GameFrame extends JFrame{
         JOptionPane.INFORMATION_MESSAGE
         );
 
-        for (int i = 0; i < dice; i++) {
-            gameBoardPanel.movePlayer();
-        }
+        checkAndMovePlayer();
         
     }
 
@@ -161,5 +159,19 @@ public class GameFrame extends JFrame{
         gameBoardPanel.setBounds(0, 60, 512, 512);
         this.add(gameBoardPanel);
         gameBoardPanel.setVisible(true);
+    }
+
+    private void checkAndMovePlayer() {
+        for (int i = 0; i < dice; i++) {
+            gameBoardPanel.movePlayer();
+        }
+
+        if (players.get(i).getBox() == 30) {
+            for (int i = 0; i <= 20; i++) {
+                gameBoardPanel.movePlayer();
+            }
+
+            players.get(i).setStatus(true);
+        }
     }
 }
