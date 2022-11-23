@@ -230,7 +230,7 @@ public class Menager implements Serializable{
      * lancia una PlayerException se il nome è vuoto, duplicato o il colore è duplicato
      * 
      * @param player il giocatore da aggiungere
-     * @throws PlayerException se il nome è vuoto o dupllicato, oppure se il colore è duplicato
+     * @throws PlayerException se il nome è vuoto o duplicato, oppure se il colore è duplicato
      */
     public void addPlayer(Player player) throws PlayerException{
         for (Player p : players) {

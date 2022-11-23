@@ -87,7 +87,12 @@ public class Player implements Serializable {
         return this.box;
     }
 
-    public void setBox() {
+    
+    /**
+     * Metodo per muovere e tener traccia della casella di un giocatore
+     * Nel caso box == 40 allora il tabellone è finito e si ritorna alla casella 0
+     */
+    public void advanceBox() {
         this.box++;
 
         if (this.box == 40) {
