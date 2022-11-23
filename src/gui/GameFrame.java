@@ -147,7 +147,10 @@ public class GameFrame extends JFrame{
         JOptionPane.INFORMATION_MESSAGE
         );
 
-        gameBoardPanel.movePlayer();
+        for (int i = 0; i < dice; i++) {
+            gameBoardPanel.movePlayer();
+        }
+        
     }
 
     public static GameFrame getInstance() {

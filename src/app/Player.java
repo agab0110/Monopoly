@@ -72,5 +72,9 @@ public class Player implements Serializable {
 
     public void setBox() {
         this.box++;
+
+        if (this.box == 40) {
+            this.box = 0;
+        }
     }
 }
