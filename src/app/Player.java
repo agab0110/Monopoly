@@ -69,8 +69,8 @@ public class Player implements Serializable {
         return this.box;
     }
 
-    public void setBox(int dice) {
-        this.box += dice;
+    public void setBox() {
+        this.box++;
     }
 
     public void boxStart() {

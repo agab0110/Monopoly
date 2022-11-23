@@ -15,6 +15,7 @@ public class GameBoardPanel extends JPanel{
 
     public GameBoardPanel(List<Player>players) {
         this.setLayout(null);
+        this.setBounds(0,0,512,512);
 
         this.players = players;
 
