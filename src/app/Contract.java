@@ -2,6 +2,12 @@ package app;
 
 import java.io.Serializable;
 
+/**
+ * Classe per la gestione dei contratti,
+ * la classe viene salvata in menager.sr
+ * 
+ * @author Alessandro Gabriele
+ */
 public class Contract implements Serializable{
     private String name;
     private int price;

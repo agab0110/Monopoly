@@ -4,7 +4,13 @@ import java.io.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
- 
+
+/**
+ * Classe per la gestione dei contratti e dei giocatori
+ * Questa classe salva il suo stato in menager.sr tenendo conto dei giocatori e contratti presenti
+ * 
+ * @author Alessandro Gabriele
+*/ 
 public class Menager implements Serializable{
     private List<Player> players;
     private List<Contract> contracts;
@@ -20,6 +26,14 @@ public class Menager implements Serializable{
         this.contracts = new ArrayList<>();
     }
 
+    /**
+     * Metodo per  il caricamento della partita salvata precedentemente in menager.sr
+     * lancia una IOExceptoion e gestisce FileNotFoundException e ClassNotFoundException 
+     * in caso il file o la classe Menager non sia trovata
+     * 
+     * @return Menager se viene trovato, null altrimenti
+     * @throws IOException se il file o la classe non viene trovata
+     */
     public static Menager loadMenager() throws IOException {
         try (
                 FileInputStream fileInputStream = new FileInputStream("menager.sr");
@@ -34,6 +48,12 @@ public class Menager implements Serializable{
         }
     }
 
+    /**
+     * Metodo per il salvataggio della partita in menager.sr
+     * lancia una IOException nel caso di errore di scrittura su menager.sr
+     * 
+     * @throws IOException in caso di errore di scrittura
+     */
     public void saveMenager() throws IOException {
         try (
                 FileOutputStream fileOutputStream = new FileOutputStream("menager.sr");
@@ -43,6 +63,13 @@ public class Menager implements Serializable{
         }
     }
 
+    /**
+     * Metodo per cercare se esiste già una paritita da caricare
+     * lancia una IOException e gestisce FileNotFoundException nel caso non trovi il file.sr
+     * 
+     * @return true se la partita viene trovata, false altrimenti
+     * @throws IOException e gestisce FileNotFoundException nel caso non trovi il file.sr
+     */
     public static boolean searchMenager() throws IOException {
         try (
                 FileInputStream fileInputStream = new FileInputStream("menager.sr");
@@ -146,6 +173,11 @@ public class Menager implements Serializable{
         contracts.add(stazioneOvest); 
     }
     
+    /**
+     * Metodo per l'assegnazione dei contratti casuali a tutti i giocatori
+     * 
+     * @param numContract numeri di contratti da assegnare ad ogni giocatore
+     */
     private void assignContracts(int numContract) {
         Collections.shuffle(contracts);
 
@@ -158,12 +190,28 @@ public class Menager implements Serializable{
             }
     }
 
-    public void payRent(Player player, Contract contract) throws MoneyExeption{
+    /**
+     * Metodo per il pagamento di un affitto
+     * lancia una MoneyException se player.getMoney() < contract.getRent()
+     * 
+     * @param player il giocatore che paga l'affitto
+     * @param contract il contratto da cui si prende l'affitto
+     * @throws MoneyException se player.getMoney() < contract.getRent()
+     */
+    public void payRent(Player player, Contract contract) throws MoneyException{
         player.subMoney(contract.getRent());
         contract.getOwner().addMoney(contract.getRent());
     }
 
-    public void buyContract(Player player, Contract contract) throws MoneyExeption{
+    /**
+     * Metodo per acquistare un contratto,
+     * lancia una MoneyExeption se  player.getMoney() < contract.getPrice()
+     * 
+     * @param player il giocatore che acquista
+     * @param contract il contratto da acquistare
+     * @throws MoneyException se i soldi non sono sufficienti
+     */
+    public void buyContract(Player player, Contract contract) throws MoneyException{
         player.subMoney(contract.getPrice());
         contract.setOwner(player);
         player.addContract(contract);
@@ -177,6 +225,13 @@ public class Menager implements Serializable{
         return contracts;
     }
 
+    /**
+     * Metodo per l'aggiunta di un giocatore all'interno della lista dei giocatori
+     * lancia una PlayerException se il nome è vuoto, duplicato o il colore è duplicato
+     * 
+     * @param player il giocatore da aggiungere
+     * @throws PlayerException se il nome è vuoto o duplicato, oppure se il colore è duplicato
+     */
     public void addPlayer(Player player) throws PlayerException{
         for (Player p : players) {
             if (player.getName() == null) {

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import app.Contract;
 import app.Menager;
-import app.MoneyExeption;
+import app.MoneyException;
 import app.Player;
 
 public class PayRentFrame extends JFrame{
@@ -35,7 +35,7 @@ public class PayRentFrame extends JFrame{
                     e -> {
                         try {
                             menager.payRent(player, contract);
-                        } catch (MoneyExeption e1) {
+                        } catch (MoneyException e1) {
                             JOptionPane.showMessageDialog(null, "Errore: " + e1.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
                         }
                         this.dispose();

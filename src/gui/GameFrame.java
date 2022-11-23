@@ -57,7 +57,7 @@ public class GameFrame extends JFrame{
         textArea = new JTextArea();
 
         label = new JLabel();
-        label.setBounds(10, 10, 100, 30);
+        label.setBounds(10, 10, 180, 30);
 
         textField.setBounds(530, 30, 170, 30);       
         textArea.setBounds(540, 70, 150, 300);
@@ -94,15 +94,21 @@ public class GameFrame extends JFrame{
 
     public void updateThread() {
         Thread thread = new Thread(() -> {
-            while (true) {
+            int time = 180;
+
+            while (time > 0) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {}
                 
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
-                label.setText("Tempo rimasto: " + "...");
+                
+                label.setText("Tempo rimasto: " + time);
+                time--;
+
             }
+            turnOver();
         });
         thread.start();
     }
@@ -162,27 +168,48 @@ public class GameFrame extends JFrame{
     }
 
     private void turnOver() {
-        GameFrame.i++;
+        if (players.get(GameFrame.i).getMoney() == 0) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Sei stato eliminato"
+            );
 
-        if (i == players.size()) {
-            i = 0;
+            players.remove(players.get(GameFrame.i));
+            gameBoardPanel.removeNameLabel();
         }
 
-        try {
-            menager.saveMenager();
-        } catch (IOException e1) {
+        if(players.size() <= 1) {
             JOptionPane.showMessageDialog(
-                null, 
-                "Errore salvataggio",
-                "Errore",
-                JOptionPane.ERROR_MESSAGE);
-            }
-        this.remove(panel);
+                null,
+                "Hai vinto",
+                "Partita conclusa",
+                JOptionPane.INFORMATION_MESSAGE);
 
-        showPanel();
-        
-        if (!players.get(i).getStatus()) {
-            throwDice();
+            this.dispose();
+        } else {
+            GameFrame.i++;
+
+            if (i == players.size()) {
+                i = 0;
+            }
+
+            try {
+                menager.saveMenager();
+            } catch (IOException e1) {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "Errore salvataggio",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+                }
+            this.remove(panel);
+            
+            if (!players.get(i).getStatus()) {
+                throwDice();
+            }
+
+            showPanel();
+            updateThread();
         }
     }
 }

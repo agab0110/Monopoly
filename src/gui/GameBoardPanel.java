@@ -58,7 +58,7 @@ public class GameBoardPanel extends JPanel{
             nameLabels.get(GameFrame.i).setLocation(nameLabels.get(GameFrame.i).getX(), nameLabels.get(GameFrame.i).getY() + 42);
         }
 
-        players.get(GameFrame.i).setBox();
+        players.get(GameFrame.i).advanceBox();
     }
 
     public void initializeNameLabel() {
@@ -90,4 +90,7 @@ public class GameBoardPanel extends JPanel{
         }
     }
 
+    public void removeNameLabel() {
+        this.remove(nameLabels.get(GameFrame.i));
+    }
 }
