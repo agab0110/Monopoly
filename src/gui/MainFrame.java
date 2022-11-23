@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -43,10 +42,10 @@ public class MainFrame extends JFrame{
         exitButton = new JButton("Esci");
 
         panel.setLayout(null);
-        panel.setBackground(Color.BLACK);
         label.setBounds(0, 0, 500, 500);
         label.setIcon(img);
         label.setOpaque(true);
+
         insertPlayerButton.setBounds(175,100,150,30);
         startGameButton.setBounds(175, 150, 150, 30);
         exitButton.setBounds(175, 200, 150, 30);
