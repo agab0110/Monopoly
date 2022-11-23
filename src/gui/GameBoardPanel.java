@@ -90,4 +90,7 @@ public class GameBoardPanel extends JPanel{
         }
     }
 
+    public void removeNameLabel() {
+        this.remove(nameLabels.get(GameFrame.i));
+    }
 }

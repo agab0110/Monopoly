@@ -184,13 +184,32 @@ public class GameFrame extends JFrame{
                 JOptionPane.ERROR_MESSAGE);
             }
         this.remove(panel);
-
-        showPanel();
         
         if (!players.get(i).getStatus()) {
             throwDice();
         }
 
+        if (players.get(GameFrame.i).getMoney() == 0) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Sei stato eliminato"
+            );
+
+            players.remove(players.get(GameFrame.i));
+            gameBoardPanel.removeNameLabel();
+
+            if(players.size() <= 1) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Hai vinto",
+                    "Partita conclusa",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+                this.dispose();
+            }
+        }
+
+        showPanel();
         updateThread();
     }
 }
