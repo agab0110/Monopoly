@@ -25,6 +25,7 @@ public class NormalGamePanel extends JPanel {
         this.menager = menager;
         this.players = menager.getPlayers();
         this.setLayout(null);
+        this.setBounds(520, 0, 200, 720);
 
         buyContractsButton = new JButton("Acquista contratto");
         payRentButton = new JButton("Paga affitto");

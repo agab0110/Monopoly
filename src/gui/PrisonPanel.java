@@ -20,6 +20,7 @@ public class PrisonPanel extends JPanel{
         this.setLayout(null);
         this.players = menager.getPlayers();
         this.menager = menager;
+        this.setBounds(520, 0, 200, 720);
 
         exitPrisonButton = new JButton("<html>Esci di prigione<br> gratutitamente</html>");
         payExitPrisonButton = new JButton("<html>Esci di prigione<br>pagando 50€</html>");
