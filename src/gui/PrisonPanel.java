@@ -43,6 +43,7 @@ public class PrisonPanel extends JPanel{
 
                 GameFrame.getInstance().remove(this);
                 GameFrame.getInstance().add(panel);
+                GameFrame.getInstance().throwDice();
                 panel.setVisible(true);
             }
         );
@@ -65,6 +66,7 @@ public class PrisonPanel extends JPanel{
 
                 GameFrame.getInstance().remove(this);
                 GameFrame.getInstance().add(panel);
+                GameFrame.getInstance().throwDice();
                 panel.setVisible(true);
             }
         );

@@ -14,7 +14,6 @@ public class NormalGamePanel extends JPanel {
     private JButton buyContractsButton;
     private JButton payRentButton;
     private JButton payTaxButton;
-    private JButton passStartButton;
 
     private List<Player> players;
     private Menager menager;
@@ -28,17 +27,14 @@ public class NormalGamePanel extends JPanel {
         buyContractsButton = new JButton("Acquista contratto");
         payRentButton = new JButton("Paga affitto");
         payTaxButton = new JButton("Paga tassa");
-        passStartButton = new JButton("Passa dal via");
         
         buyContractsButton.setBounds(540, 390, 150, 30);
         payRentButton.setBounds(540, 430, 150, 30);
         payTaxButton.setBounds(540, 470, 150, 30);
-        passStartButton.setBounds(540, 510, 150, 30);
 
         this.add(buyContractsButton);
         this.add(payRentButton);
         this.add(payTaxButton);
-        this.add(passStartButton);
 
         addAction(players.get(GameFrame.i));
     }
@@ -62,11 +58,6 @@ public class NormalGamePanel extends JPanel {
             }
         );
 
-        passStartButton.addActionListener(
-            e -> {
-                player.addMoney(200);
-            }
-        );
     }
 
     private void payRentAction(Player player) {

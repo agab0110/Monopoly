@@ -51,7 +51,7 @@ public class GameFrame extends JFrame{
         this.menager = menager;
 
         turnOverButton = new JButton("Termina turno");
-        turnOverButton.setBounds(540, 590, 150, 30);
+        turnOverButton.setBounds(540, 560, 150, 30);
 
         textField = new JTextField();
         textArea = new JTextArea();
@@ -69,25 +69,7 @@ public class GameFrame extends JFrame{
 
         turnOverButton.addActionListener(
             e -> {
-                i++;
-
-                if (i == players.size()) {
-                    i = 0;
-                }
-
-                try {
-                    menager.saveMenager();
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Errore salvataggio",
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE);
-                    }
-                this.remove(panel);
-
-                showPanel();
-                throwDice();
+                turnOver();
             }
         );
 
@@ -164,14 +146,43 @@ public class GameFrame extends JFrame{
     private void checkAndMovePlayer() {
         for (int i = 0; i < dice; i++) {
             gameBoardPanel.movePlayer();
+            if (players.get(GameFrame.i).getBox() == 0) {
+                players.get(GameFrame.i).addMoney(200);
+            }
         }
 
-        if (players.get(i).getBox() == 30) {
-            for (int i = 0; i <= 20; i++) {
+        if (players.get(GameFrame.i).getBox() == 30) {
+            for (int i = 0; i < 20; i++) {
                 gameBoardPanel.movePlayer();
             }
 
-            players.get(i).setStatus(true);
+            players.get(GameFrame.i).setStatus(true);
+            turnOver();
+        }
+    }
+
+    private void turnOver() {
+        GameFrame.i++;
+
+        if (i == players.size()) {
+            i = 0;
+        }
+
+        try {
+            menager.saveMenager();
+        } catch (IOException e1) {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Errore salvataggio",
+                "Errore",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        this.remove(panel);
+
+        showPanel();
+        
+        if (!players.get(i).getStatus()) {
+            throwDice();
         }
     }
 }
