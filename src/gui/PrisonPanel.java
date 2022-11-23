@@ -16,10 +16,11 @@ public class PrisonPanel extends JPanel{
     private List<Player> players;
     private Menager menager;
 
-    public PrisonPanel(List<Player> players, Menager menager) {
+    public PrisonPanel(Menager menager) {
         this.setLayout(null);
-        this.players = players;
+        this.players = menager.getPlayers();
         this.menager = menager;
+        this.setBounds(520, 0, 200, 720);
 
         exitPrisonButton = new JButton("<html>Esci di prigione<br> gratutitamente</html>");
         payExitPrisonButton = new JButton("<html>Esci di prigione<br>pagando 50€</html>");
@@ -38,10 +39,11 @@ public class PrisonPanel extends JPanel{
             e -> {
                 player.setStatus(false);
 
-                JPanel panel = new NormalGamePanel(players, menager);
+                JPanel panel = new NormalGamePanel(menager);
 
                 GameFrame.getInstance().remove(this);
                 GameFrame.getInstance().add(panel);
+                GameFrame.getInstance().throwDice();
                 panel.setVisible(true);
             }
         );
@@ -60,10 +62,11 @@ public class PrisonPanel extends JPanel{
                 }
                 player.setStatus(false);
                 
-                JPanel panel = new NormalGamePanel(players, menager);
+                JPanel panel = new NormalGamePanel(menager);
 
                 GameFrame.getInstance().remove(this);
                 GameFrame.getInstance().add(panel);
+                GameFrame.getInstance().throwDice();
                 panel.setVisible(true);
             }
         );

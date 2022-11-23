@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import app.Menager;
-import app.Player;
 import app.PlayerException;
 
 public class MainFrame extends JFrame{   
@@ -24,11 +21,11 @@ public class MainFrame extends JFrame{
     private JButton startGameButton;
     private JButton exitButton;
 
-    private List<Player> players;
     private Menager menager;
 
     public MainFrame(){
-        players = new ArrayList<>();
+        menager = new Menager();
+        menager.constructor();
 
         this.setTitle("Monopoly");
         setResizable(false);
@@ -66,10 +63,13 @@ public class MainFrame extends JFrame{
                     );
 
                 if (answer == 0) {
-                    this.dispose();
                     menager = Menager.loadMenager();
                     GameFrame gameFrame = new GameFrame(menager);
                     gameFrame.setVisible(true);
+                    this.setVisible(false);
+                    this.dispose();
+                } else {
+                    this.setVisible(true);
                 }
             }
         } catch (IOException e) {
@@ -95,7 +95,7 @@ public class MainFrame extends JFrame{
     private void addAction() {
         insertPlayerButton.addActionListener(
             actionEvent -> {
-                if (players.size() < 6) {
+                if (menager.getPlayersSize() < 6) {
                     try {
                         addNewPlayer();
                     } catch (PlayerException e) {
@@ -119,7 +119,7 @@ public class MainFrame extends JFrame{
 
         startGameButton.addActionListener(
             actionEvent -> {
-                if (players.size() >= 2) {
+                if (menager.getPlayersSize() >= 2) {
                     startGame();
                 } else {
                     JOptionPane.showMessageDialog(
@@ -140,14 +140,12 @@ public class MainFrame extends JFrame{
     }
 
     private void addNewPlayer() throws PlayerException{        
-        NewPlayerFrame newPlayerFrame = new NewPlayerFrame(players);
+        NewPlayerFrame newPlayerFrame = new NewPlayerFrame(menager);
         newPlayerFrame.setVisible(true);
     }
 
     private void startGame() {
-        menager = new Menager();
-        menager.constructor(players);
-
+        menager.start();
         GameFrame gameFrame = new GameFrame(menager);
         gameFrame.setVisible(true);
 

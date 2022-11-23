@@ -4,15 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.awt.Color;
+
 public class Player implements Serializable {
     private String name;
+    private Color color;
     private boolean prison;    
     private int money;
     private List<Contract> contracts;
+    private int box;
 
-    public Player(String name) {
+    public Player(String name, Color color) {
         this.name = name;
+        this.color = color;
         contracts = new ArrayList<>();
+        this.box = 0;
     }
 
     public int getMoney() {
@@ -54,5 +60,21 @@ public class Player implements Serializable {
         }
         
         this.money -= money;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    public int getBox() {
+        return this.box;
+    }
+
+    public void setBox() {
+        this.box++;
+
+        if (this.box == 40) {
+            this.box = 0;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,17 +22,20 @@ public class GameFrame extends JFrame{
     public static int i = 0;
 
     private JPanel panel;
-    private GameBoardPanel imagePanel;
+    private GameBoardPanel gameBoardPanel;
 
     private JTextField textField;
     private JTextArea textArea;
 
     private JButton turnOverButton;
 
+    private JLabel label;
+
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
     private static GameFrame frame;
+    private int dice;
 
     public GameFrame(Menager menager) {
         GameFrame.frame = this;
@@ -47,10 +51,13 @@ public class GameFrame extends JFrame{
         this.menager = menager;
 
         turnOverButton = new JButton("Termina turno");
-        turnOverButton.setBounds(540, 590, 150, 30);
+        turnOverButton.setBounds(540, 560, 150, 30);
 
         textField = new JTextField();
         textArea = new JTextArea();
+
+        label = new JLabel();
+        label.setBounds(10, 10, 100, 30);
 
         textField.setBounds(530, 30, 170, 30);       
         textArea.setBounds(540, 70, 150, 300);
@@ -58,35 +65,17 @@ public class GameFrame extends JFrame{
         this.add(textField);
         this.add(textArea);
         this.add(turnOverButton);
+        this.add(label);
 
         turnOverButton.addActionListener(
             e -> {
-                i++;
-
-                if (i == players.size()) {
-                    i = 0;
-                }
-
-                try {
-                    menager.saveMenager();
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Errore salvataggio",
-                        "Errore",
-                        JOptionPane.ERROR_MESSAGE);
-                }
-                this.remove(panel);
-                
-                showPanel();
+                turnOver();
             }
         );
 
-        imagePanel = new GameBoardPanel();
-        imagePanel.setBounds(0, 60, 512, 512);
-        this.add(imagePanel);
-        imagePanel.setVisible(true);
+        gameBoardPanel = new GameBoardPanel(players);
         
+        addGameBoard();
         showPanel();
         throwDice();
         updateThread();
@@ -94,9 +83,9 @@ public class GameFrame extends JFrame{
 
     private void showPanel() {
         if(players.get(i).getStatus() == true) {
-            panel = new PrisonPanel(players, menager);
+            panel = new PrisonPanel(menager);
         } else {
-            panel = new NormalGamePanel(players, menager);
+            panel = new NormalGamePanel(menager);
         }
 
         this.add(panel);
@@ -112,7 +101,7 @@ public class GameFrame extends JFrame{
                 
                 textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
                 textArea.setText(setContracts());
-                
+                label.setText("Tempo rimasto: " + "...");
             }
         });
         thread.start();
@@ -131,16 +120,69 @@ public class GameFrame extends JFrame{
 
     public void throwDice(){
         Random random = new Random();
+        dice = random.nextInt(2,12);
+
         JOptionPane.showMessageDialog(
         null,
-        random.nextInt(2,12),
+        dice,
         "Dadi",
         JOptionPane.INFORMATION_MESSAGE
         );
+
+        checkAndMovePlayer();
+        
     }
 
     public static GameFrame getInstance() {
         return frame;
     }
 
+    private void addGameBoard() {
+        gameBoardPanel.setBounds(0, 60, 512, 512);
+        this.add(gameBoardPanel);
+        gameBoardPanel.setVisible(true);
+    }
+
+    private void checkAndMovePlayer() {
+        for (int i = 0; i < dice; i++) {
+            gameBoardPanel.movePlayer();
+            if (players.get(GameFrame.i).getBox() == 0) {
+                players.get(GameFrame.i).addMoney(200);
+            }
+        }
+
+        if (players.get(GameFrame.i).getBox() == 30) {
+            for (int i = 0; i < 20; i++) {
+                gameBoardPanel.movePlayer();
+            }
+
+            players.get(GameFrame.i).setStatus(true);
+            turnOver();
+        }
+    }
+
+    private void turnOver() {
+        GameFrame.i++;
+
+        if (i == players.size()) {
+            i = 0;
+        }
+
+        try {
+            menager.saveMenager();
+        } catch (IOException e1) {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Errore salvataggio",
+                "Errore",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        this.remove(panel);
+
+        showPanel();
+        
+        if (!players.get(i).getStatus()) {
+            throwDice();
+        }
+    }
 }

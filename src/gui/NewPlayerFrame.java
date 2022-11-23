@@ -1,28 +1,35 @@
 package gui;
 
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import app.Player;
+import java.awt.Color;
 
-public class NewPlayerFrame extends JFrame{
-    private String[] pawns = {"ditale", "carriola", "scarpa", "cane", "macchina", "ferro", "cappello", "nave"};
+import app.Menager;
+import app.Player;
+import app.PlayerException;
+
+public class NewPlayerFrame extends JFrame {
+    private String[] colors = {"rosso", "blu", "verde", "giallo", "arancione", "azzurro"};
     
     private JLabel nameLabel;
     private JLabel pawnLabel;
     private JTextField textField;
-    private JComboBox comboBox;
+    private JComboBox<String> comboBox;
     private JButton sendButton;
 
     private JPanel panel;
 
-    public NewPlayerFrame(List<Player> players) {
+    private Menager menager;
+
+    public NewPlayerFrame(Menager menager) throws PlayerException {
+        this.menager = menager;
+
         this.setSize(400,200);
         setResizable(false);
         this.setLocationRelativeTo(null);
@@ -33,7 +40,7 @@ public class NewPlayerFrame extends JFrame{
         nameLabel = new JLabel("Nome");
         pawnLabel = new JLabel("Pedina");
         textField = new JTextField();
-        comboBox = new JComboBox(pawns);
+        comboBox = new JComboBox<>(colors);
         sendButton = new JButton("Inserisci");
 
         panel.setLayout(null);
@@ -49,6 +56,57 @@ public class NewPlayerFrame extends JFrame{
         panel.add(textField);
         panel.add(comboBox);
         panel.add(sendButton);
+
+        insertAction();
+    }
+
+    private void insertAction() throws PlayerException{
+        sendButton.addActionListener(
+            e -> {
+                String name = new String();
+                String temp = new String();
+                Color color;
+
+                name = textField.getText();
+                temp = (String) comboBox.getSelectedItem();
+
+                color = stringToColor(temp);
+
+                Player player = new Player(name, color);
+
+                try {
+                    menager.addPlayer(player);
+                } catch (PlayerException e1) {
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Errore " + e1.getMessage(),
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                    
+                this.dispose();
+            }
+        );
+    }
+
+    private Color stringToColor(String temp) {
+        switch (temp) {
+            case "rosso":
+                return Color.RED;
+            case "blu":
+                return Color.BLUE;
+            case "verde":
+                return Color.GREEN;
+            case "giallo":
+                return Color.YELLOW;
+            case "arancione":
+                return Color.ORANGE;
+            case "azzurro":
+                return Color.CYAN;
+            default:
+                return null;
+        }
     }
     
 }
