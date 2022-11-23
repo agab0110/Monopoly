@@ -168,27 +168,6 @@ public class GameFrame extends JFrame{
     }
 
     private void turnOver() {
-        GameFrame.i++;
-
-        if (i == players.size()) {
-            i = 0;
-        }
-
-        try {
-            menager.saveMenager();
-        } catch (IOException e1) {
-            JOptionPane.showMessageDialog(
-                null, 
-                "Errore salvataggio",
-                "Errore",
-                JOptionPane.ERROR_MESSAGE);
-            }
-        this.remove(panel);
-        
-        if (!players.get(i).getStatus()) {
-            throwDice();
-        }
-
         if (players.get(GameFrame.i).getMoney() == 0) {
             JOptionPane.showMessageDialog(
                 null,
@@ -197,19 +176,40 @@ public class GameFrame extends JFrame{
 
             players.remove(players.get(GameFrame.i));
             gameBoardPanel.removeNameLabel();
-
-            if(players.size() <= 1) {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Hai vinto",
-                    "Partita conclusa",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-                this.dispose();
-            }
         }
 
-        showPanel();
-        updateThread();
+        if(players.size() <= 1) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Hai vinto",
+                "Partita conclusa",
+                JOptionPane.INFORMATION_MESSAGE);
+
+            this.dispose();
+        } else {
+            GameFrame.i++;
+
+            if (i == players.size()) {
+                i = 0;
+            }
+
+            try {
+                menager.saveMenager();
+            } catch (IOException e1) {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "Errore salvataggio",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+                }
+            this.remove(panel);
+            
+            if (!players.get(i).getStatus()) {
+                throwDice();
+            }
+
+            showPanel();
+            updateThread();
+        }
     }
 }
