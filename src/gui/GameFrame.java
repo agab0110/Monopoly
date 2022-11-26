@@ -192,7 +192,9 @@ public class GameFrame extends JFrame{
         if (players.get(GameFrame.i).getMoney() == 0) {
             JOptionPane.showMessageDialog(
                 null,
-                "Sei stato eliminato"
+                players.get(GameFrame.i).getName() + " e' stato eliminato",
+                "Eliminazione",
+                JOptionPane.INFORMATION_MESSAGE
             );
 
             players.remove(players.get(GameFrame.i));
@@ -202,8 +204,8 @@ public class GameFrame extends JFrame{
         if(players.size() <= 1) {
             JOptionPane.showMessageDialog(
                 null,
-                "Hai vinto",
-                "Partita conclusa",
+                players.get(GameFrame.i).getName() + " ha vinto",
+                "Vittoria!",
                 JOptionPane.INFORMATION_MESSAGE);
 
             this.dispose();
