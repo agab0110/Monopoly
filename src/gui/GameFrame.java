@@ -31,14 +31,15 @@ public class GameFrame extends JFrame{
 
     private JLabel timer;
 
-    private Thread thread;
-
     private List<Player> players;
     private List<Contract> contracts;
     private Menager menager;
     private static GameFrame frame;
     private int dice;
     private int time;
+
+    Thread updateThread;
+    Thread timerThread;
 
     public GameFrame(Menager menager) {
         GameFrame.frame = this;
@@ -80,15 +81,16 @@ public class GameFrame extends JFrame{
         
         addGameBoard();
         showPanel();
-        throwDice();
-
-        if(players.get(GameFrame.i).getStatus() == false){
+        
+        if (!players.get(GameFrame.i).getStatus()) {
             updateThread();
-        }  
+            updateTimerThread();
+            throwDice();
+        }
     }
 
     private void showPanel() {
-        if(players.get(i).getStatus() == true) {
+        if(players.get(GameFrame.i).getStatus() == true) {
             panel = new PrisonPanel(menager);
         } else {
             panel = new NormalGamePanel(menager);
@@ -99,30 +101,40 @@ public class GameFrame extends JFrame{
     }
 
     public void updateThread() {
-        thread = new Thread(() -> {
+        updateThread = new Thread(() -> {
+
+            while (true) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {}
+                
+                textField.setText("Turno di " + players.get(GameFrame.i).getName() + ", soldi: " + players.get(GameFrame.i).getMoney());
+                textArea.setText(setContracts());
+            }
+        });
+        updateThread.start();
+    }
+
+    public void updateTimerThread() {
+        timerThread = new Thread(() -> {
             time = 180;
 
-            while (time > 0) {
+            while (true) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {}
-                
-                textField.setText("Turno di " + players.get(i).getName() + ", soldi: " + players.get(i).getMoney());
-                textArea.setText(setContracts());
 
                 timer.setText("Tempo rimasto: " + time);
                 time--;
-
             }
-            turnOver();
         });
-        thread.start();
+        timerThread.start();
     }
 
     private String setContracts() {
         String contractName = "";
 
-        contracts = players.get(i).getContract();
+        contracts = players.get(GameFrame.i).getContract();
 
         for (Contract contract : contracts) {
             contractName += contract.getName() + "\n";
@@ -174,7 +186,8 @@ public class GameFrame extends JFrame{
     }
 
     private void turnOver() {
-        thread.interrupt();
+        updateThread.interrupt();
+        timerThread.interrupt();
 
         if (players.get(GameFrame.i).getMoney() == 0) {
             JOptionPane.showMessageDialog(
@@ -211,18 +224,14 @@ public class GameFrame extends JFrame{
                     JOptionPane.ERROR_MESSAGE);
                 }
             this.remove(panel);
-            
-            if (!players.get(i).getStatus()) {
-                throwDice();
-            }
 
             showPanel();
+            updateThread();
 
-            if(players.get(GameFrame.i).getStatus() == false){
-                updateThread();
+            if(!players.get(GameFrame.i).getStatus()){
+                throwDice();
+                updateTimerThread();
             }
-
-            //TODO: risolvere il problema del timer creando un altro thread che aggiorna la label
         }
     }
 }
