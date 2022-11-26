@@ -28,6 +28,13 @@ public class PrisonPanel extends JPanel{
         exitPrisonButton.setBounds(540, 390, 150, 70);
         payExitPrisonButton.setBounds(540, 470, 150, 70);
 
+        JOptionPane.showMessageDialog(
+            null,
+            "Sei in prigione!",
+            "Prigione",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+
         this.add(exitPrisonButton);
         this.add(payExitPrisonButton);
 
