@@ -1,3 +1,1 @@
-Progetto per esame di programmazione 2.
-
-Monopoly con UI e GUI
+A java version of monoply with GUI and a test case

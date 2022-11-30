@@ -6,8 +6,9 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Classe per la gestione dei contratti e dei giocatori
- * Questa classe salva il suo stato in menager.sr tenendo conto dei giocatori e contratti presenti
+ * Class for managing contracts and players
+ * This class saves its state in menager.sr 
+ * with the state of the players and the state of the contracts present
  * 
  * @author Alessandro Gabriele
 */ 
@@ -27,12 +28,12 @@ public class Menager implements Serializable{
     }
 
     /**
-     * Metodo per  il caricamento della partita salvata precedentemente in menager.sr
-     * lancia una IOExceptoion e gestisce FileNotFoundException e ClassNotFoundException 
-     * in caso il file o la classe Menager non sia trovata
+     * Method for loading the previously saved game in menager.sr
+     * throw an IOExceptoion and handle FileNotFoundException and ClassNotFoundException
+     * in case the file or class Manager is not found
      * 
-     * @return Menager se viene trovato, null altrimenti
-     * @throws IOException se il file o la classe non viene trovata
+     * @return Manager if found, null otherwise
+     * @throws IOException if the file or class is not found
      */
     public static Menager loadMenager() throws IOException {
         try (
@@ -49,10 +50,10 @@ public class Menager implements Serializable{
     }
 
     /**
-     * Metodo per il salvataggio della partita in menager.sr
-     * lancia una IOException nel caso di errore di scrittura su menager.sr
+     * Method for saving the game in manager.sr
+     * throws an IOException in case of error writing to manager.sr
      * 
-     * @throws IOException in caso di errore di scrittura
+     * @throws IOException in case of a writing error
      */
     public void saveMenager() throws IOException {
         try (
@@ -64,11 +65,11 @@ public class Menager implements Serializable{
     }
 
     /**
-     * Metodo per cercare se esiste già una paritita da caricare
-     * lancia una IOException e gestisce FileNotFoundException nel caso non trovi il file.sr
+     * Method to search if there is already a game to load
+     * throws an IOException and handles FileNotFoundException in case the menager.sr is not found
      * 
-     * @return true se la partita viene trovata, false altrimenti
-     * @throws IOException e gestisce FileNotFoundException nel caso non trovi il file.sr
+     * @return true if the game is found, false otherwise
+     * @throws IOException and handles FileNotFoundException in case the menager.sr is not found
      */
     public static boolean searchMenager() throws IOException {
         try (
@@ -174,9 +175,9 @@ public class Menager implements Serializable{
     }
     
     /**
-     * Metodo per l'assegnazione dei contratti casuali a tutti i giocatori
+     * Method for randomly assigning contracts to all players
      * 
-     * @param numContract numeri di contratti da assegnare ad ogni giocatore
+     * @param numContract numbers of contracts to be assigned to each player
      */
     private void assignContracts(int numContract) {
         Collections.shuffle(contracts);
@@ -191,12 +192,12 @@ public class Menager implements Serializable{
     }
 
     /**
-     * Metodo per il pagamento di un affitto
-     * lancia una MoneyException se player.getMoney() < contract.getRent()
+     * Method for paying rent
+     * throw MoneyException if player.getMoney() < contract.getRent()
      * 
-     * @param player il giocatore che paga l'affitto
-     * @param contract il contratto da cui si prende l'affitto
-     * @throws MoneyException se player.getMoney() < contract.getRent()
+     * @param player the player who pays the rent
+     * @param contract the contract from which the lease is taken
+     * @throws MoneyException if player.getMoney() < contract.getRent()
      */
     public void payRent(Player player, Contract contract) throws MoneyException{
         player.subMoney(contract.getRent());
@@ -204,12 +205,12 @@ public class Menager implements Serializable{
     }
 
     /**
-     * Metodo per acquistare un contratto,
-     * lancia una MoneyExeption se  player.getMoney() < contract.getPrice()
+     * Method of buying a contract,
+     * launch a MoneyExeption if player.getMoney() < contract.getPrice()
      * 
-     * @param player il giocatore che acquista
-     * @param contract il contratto da acquistare
-     * @throws MoneyException se i soldi non sono sufficienti
+     * @param player the buying player
+     * @param contract the contract to buy
+     * @throws MoneyException if the money is not enough
      */
     public void buyContract(Player player, Contract contract) throws MoneyException{
         player.subMoney(contract.getPrice());
@@ -226,11 +227,11 @@ public class Menager implements Serializable{
     }
 
     /**
-     * Metodo per l'aggiunta di un giocatore all'interno della lista dei giocatori
-     * lancia una PlayerException se il nome è vuoto, duplicato o il colore è duplicato
+     * Method for adding a player into the player list
+     * throws PlayerException if name is empty, duplicate or color is duplicate
      * 
-     * @param player il giocatore da aggiungere
-     * @throws PlayerException se il nome è vuoto o duplicato, oppure se il colore è duplicato
+     * @param player the player to add
+     * @throws PlayerException if the name is empty or duplicated, or if the color is duplicated
      */
     public void addPlayer(Player player) throws PlayerException{
         for (Player p : players) {

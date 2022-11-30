@@ -3,8 +3,8 @@ package app;
 import java.io.Serializable;
 
 /**
- * Classe per la gestione dei contratti,
- * la classe viene salvata in menager.sr
+ * Contract management class,
+ * the class is saved in manager.sr
  * 
  * @author Alessandro Gabriele
  */

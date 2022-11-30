@@ -7,8 +7,8 @@ import java.util.List;
 import java.awt.Color;
 
 /**
- * Classe per la gestione dei giocatori,
- * la classe viene salvata in menager.sr
+ * Class for player management,
+ * the class is saved in menager.sr
  * 
  * @author Alessandro Gabriele
  */
@@ -57,19 +57,19 @@ public class Player implements Serializable {
     }
 
     /**
-     * La funzione serve ad aggiungere soldi ad un giocatore
+     * The function is to add money to a player
      * 
-     * @param money soldi da aggiungere
+     * @param money money to add
      */
     public void addMoney(int money) {
         this.money += money;
     }
 
     /**
-     * La funzione serve a sottrarre soldi da un giocatore
+     * The function is to subtract money from a player
      * 
-     * @param money soldi da sottrarre
-     * @throws MoneyException se i soldi non sono sufficienti
+     * @param money money to subtract
+     * @throws MoneyException if the money is not enough
      */
     public void subMoney(int money) throws MoneyException {
         if (this.money - money < 0) {
@@ -89,8 +89,8 @@ public class Player implements Serializable {
 
     
     /**
-     * Metodo per muovere e tener traccia della casella di un giocatore
-     * Nel caso box == 40 allora il tabellone è finito e si ritorna alla casella 0
+     * Method of moving and keeping track of a player's square
+     * If box == 40 then the board is finished and you return to box 0
      */
     public void advanceBox() {
         this.box++;
